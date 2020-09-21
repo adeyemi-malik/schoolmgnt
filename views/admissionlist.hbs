@@ -1,0 +1,32 @@
+<h3>Admission List</h3>
+
+<table class="table table-responsive table-striped table-bordered">
+    <thead>
+        <th>ID</th>
+        <th>FIRST NAME</th>
+        <th>MIDDLE NAME</th>
+        <th>LAST NAME</th>
+        <th>DATE OF BIRTH</th>
+        <th>SEX</th>
+        <th>AGE</th>
+        <th>CLASS</th>
+        <th>ADDRESS</th>
+        <th>PHONE NUMBER</th>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{ID}}</td>
+            <td>{{firstname}}</td>
+            <td>{{middlename}}</td>
+            <td>{{lastname}}</td>
+            <td>{{dateofbirth}}</td>
+            <td>{{sex}}</td>
+            <td>{{age}}</td>
+            <td>{{currentclass}}</td>
+            <td>{{address}}</td>
+            <td>{{phoneno}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
