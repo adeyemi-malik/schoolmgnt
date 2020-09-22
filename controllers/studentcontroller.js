@@ -28,7 +28,7 @@ router.post('/registerstudent', async function (req, res) {
 })
 router.get('/studentslist', async function (req, res) {
     let result = await studentmanager.list();
-    res.render('studentslist', { data: result[0] });
+    res.render('studentslist', { layout: 'admin', data: result[0] });
 });
 router.get('/students/edit/:ID', async function (req, res) {
     let ID = req.params.ID;

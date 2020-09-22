@@ -1,0 +1,33 @@
+<div class="container">
+    <h3>LOGIN</h3>
+    <form method="POST" action='login'>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="form-group">
+                    <label>EMAIL</label>
+                    <input class="form-control" name='email' type='email' required />
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="form-group">
+                    <label>PASSWORD</label>
+                    <input class="form-control" name='password' type='password'>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="text-center">
+                    <button class="btn btn-primary" type="submit">Login</button>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="text-center">
+                    <a href="/users/signup">don't have an account yet?</a>
+                </div>
+            </div>
+        </div>
+
+
+</div>
+<p class='alert alert-danger'>{{message}}</p>
+</form>
+</div>

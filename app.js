@@ -21,14 +21,49 @@ app.engine('hbs', handlebars({
     extname: 'hbs'
 }));
 
+function auth(req, res, next) {
+    if (req.session.isLoggedIn == true) {
+        next();
+    }
+    else {
+        res.redirect('/users/login')
+    }
+}
+
+function adminAuth(req, res, next) {
+    if (req.session.roles.some(r => r.name === 'Admin')) {
+        next();
+    }
+    else {
+        res.redirect('/forbidden')
+    }
+}
+function RegistrarAuth(req, res, next) {
+    if (req.session.roles.some(r => r.name === 'Registrar')) {
+        next();
+    }
+    else {
+        res.redirect('/forbidden');
+    }
+}
+app.get('/forbidden', function (req, res) {
+    res.render('forbidden');
+});
+
+
 
 app.get('/', function (req, res) {
-    res.send('Hello World!')
+    res.render('home');
+});
+app.get('/admin', function (req, res) {
+    res.render('admindashboard', { layout: 'admin' });
 })
 
 
 
 
+app.use(require('./controllers/usercontroller'));
+app.use(require('./controllers/rolecontroller'));
 app.use(require('./controllers/applicantController'));
 app.use(require('./controllers/studentController'));
 app.use(require('./controllers/classController'));
