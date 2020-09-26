@@ -20,7 +20,7 @@ class ClassCategoryManager {
     async list() {
         let selectQuery = `SELECT * FROM class_category WHERE is_deleted = ${0}`;
         let result = await connection.query(selectQuery);
-        return result;
+        return result[0];
 
     }
 

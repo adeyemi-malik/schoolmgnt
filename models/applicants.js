@@ -38,7 +38,7 @@ class ApplicantManager {
         // let findquery = `SELECT classes.ID FROM classes INNER JOIN applicants ON applicants.class_id = classes.ID WHERE classes.ID = ${class_id}`;
         // let result = await connection.query(findquery);
         let currentdate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        let insertQuery = `INSERT INTO applicants (firstname, middlename, lastname, dateofbirth, sex, age, class_id, address, phoneno,date_created) VALUES( '${firstname}','${middlename}', '${lastname}', '${dateofbirth}','${sex}',${age},'${class_id}','${address}','${phoneno}','${currentdate}')`;
+        let insertQuery = `INSERT INTO applicants (firstname, middlename, lastname, dateofbirth, sex, age, class_id, address, phoneno,date_created) VALUES( '${firstname}','${middlename}', '${lastname}','${dateofbirth}','${sex}',${age},${class_id},'${address}','${phoneno}','${currentdate}')`;
         await connection.query(insertQuery);
         //return result;
     }

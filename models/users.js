@@ -34,8 +34,7 @@ class UsersManager {
         return result[0][0];
     }
     create(firstname, lastname, email, phone_no, password) {
-        let currentdate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        let insertQuery = `INSERT INTO users (firstname,lastname,email,phoneno,password) VALUES( '${firstname}', '${lastname}', '${email}', '${phone_no}','${password}',${currentdate})`;
+        let insertQuery = `INSERT INTO users (firstname,lastname,email,phoneno,password) VALUES( '${firstname}', '${lastname}', '${email}', '${phone_no}','${password}')`;
         connection.query(insertQuery);
     }
 
@@ -46,10 +45,25 @@ class UsersManager {
         return result;
     }
     async getRoles(userId) {
-        let rolesQuery = `select name from roles r inner join userroles ur on r.id = ur.roleid and ur.userid = ${userId}`;
+        let rolesQuery = `select title from roles r inner join user_role ur on r.id = ur.role_id and ur.user_id = ${userId}`;
         let result = await connection.query(rolesQuery);
         return result[0];
     }
+    async update(ID, firstname, lastname, email, phone_no, password) {
+        let currentdate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        let updateQuery = `UPDATE users SET firstname = '${firstname}',lastname = '${lastname}',lastname = '${lastname}', email ='${email}',phoneno = '${phone_no}',password = '${password}',last_modified = '${currentdate}' where ID = ${ID}`;
+        await connection.query(updateQuery);
+    }
+
+
+    async Remove(ID) {
+
+        //let currentdate = new Date().toISOString().split("T")[0];
+        let deleteQuery = `UPDATE users SET is_deleted = ${1}  WHERE ID = ${ID}`;
+        let result = await connection.query(deleteQuery);
+        return result;
+    }
+
 
 }
 module.exports = UsersManager;

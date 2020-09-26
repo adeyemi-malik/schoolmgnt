@@ -1,24 +1,19 @@
 <div class="container">
 
-    <form class="well form-horizontal" action=" " method="post" id="" action="/apply">
-        <fieldset>
+    <div class="card">
+        <form class="well form-horizontal" action=" " method="post" id="" action="/apply">
+
 
             <!-- Form Name -->
-            <legend>
-                <center>
-                    <h2><b> Create a Class</b></h2>
-                </center>
-            </legend><br>
+            <div class="card-title text-center">Create a Class</div>
 
             <!-- Text input-->
 
-            <div class="form-group">
+            <div class="form-group col-7">
                 <label class="col-md-4 control-label">CLASS NAME</label>
-                <div class="col-md-4 inputGroupContainer">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input name="class_name" placeholder="class Name" value="" class="form-control" type="text">
-                    </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input name="class_name" placeholder="class Name" value="" class="form-control" type="text">
                 </div>
             </div>
 
@@ -26,43 +21,40 @@
 
             <!-- Text input-->
 
-            <div class="form-group">
-                <label class="col-md-4 control-label">CLASS CATEGORY</label>
-                <div class="col-md-4 inputGroupContainer">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <select name="class_category_id" placeholder="category" value="{{ID}}" class="form-control"
-                            type="text">
-                            {{#each data}}
-                            <option value='{{ID}}'>{{name}}</option>
-                            {{/each}}
+            <div class="form-group col-7">
+                <label class="col-md-4 form-check-label">CLASS CATEGORY</label>
+                <div class="input-group">
+                    <select name="class_category_id" placeholder="category" value="{{ID}}" class="form-control"
+                        type="text">
+                        {{#each data}}
+                        <option value='{{ID}}'>{{name}}</option>
+                        {{/each}}
 
-                        </select>
-                    </div>
+                    </select>
                 </div>
             </div>
+    </div>
 
 
 
-            <!-- Text input-->
+    <!-- Text input-->
 
-            <!-- Select Basic -->
+    <!-- Select Basic -->
 
-            <!-- Success message -->
-            <div class="alert alert-success" role="alert" id="success_message">Success <i
-                    class="glyphicon glyphicon-thumbs-up"></i> Success!.</div>
+    <!-- Success message -->
+    <div class="alert alert-success" role="alert" id="success_message">Success <i
+            class="glyphicon glyphicon-thumbs-up"></i> Success!.</div>
 
-            <!-- Button -->
-            <div class="form-group">
-                <label class="col-md-4 control-label"></label>
-                <div class="col-md-4"><br>
-                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit"
-                        class="btn btn-warning">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span
-                            class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
-                </div>
-            </div>
+    <!-- Button -->
+    <div class="form-group">
 
-        </fieldset>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-success">SUBMIT
+            </button>
+        </div>
+    </div>
+
+    </fieldset>
     </form>
 </div>
 </div><!-- /.container -->

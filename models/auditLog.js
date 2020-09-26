@@ -7,6 +7,11 @@ class AuditLog {
         let insertQuery = `INSERT INTO auditlog(action, detail, performedby, date_performed) VALUES('${action}', '${detail}', '${performedby}','${currentDate}')`;
         connection.query(insertQuery);
     }
+    async getLogs() {
+        let selectQuery = `select * from auditlog`;
+        let result = await connection.query(selectQuery);
+        return result;
+    }
 }
 
 module.exports = AuditLog;

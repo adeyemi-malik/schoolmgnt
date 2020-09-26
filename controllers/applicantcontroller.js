@@ -6,6 +6,96 @@ const StudentManager = require('../models/student');
 const studentmanager = new StudentManager();
 const { ClassManager } = require('../models/classes');
 const classmanager = new ClassManager();
+const AuditLog = require('../models/auditlog');
+const auditLog = new AuditLog();
+const Swal = require('sweetalert2');
+
+
+function auth(req, res, next) {
+    if (isAuthenticatedRequest(req)) {
+        next();
+    }
+    else {
+        res.redirect('/users/login')
+    }
+}
+
+/*function adminAuth(req, res, next) {
+    if (isAdminRequest(req)) {
+        next();
+    }
+    else {
+        res.redirect('/forbidden')
+    }
+}*/
+
+function isAdminRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin');
+}
+
+function isRegistrarRequest(req) {
+    return req.session.roles.some(r => r.title === 'Registrar');
+}
+function isProprietorRequest(req) {
+    return req.session.roles.some(r => r.title === 'Proprietor');
+}
+function isPrincipalRequest(req) {
+    return req.session.roles.some(r => r.title === 'Principal');
+}
+function isAuthenticatedRequest(req) {
+    return req.session.isLoggedIn == true;
+}
+function requireAny(conditionFunctions) {
+    return function (req, res, next) {
+        for (i in conditionFunctions) {
+            const f = conditionFunctions[i];
+            const succeeded = f(req);
+            if (succeeded) {
+                next();
+                return;
+            }
+        }
+        res.redirect('/forbidden');
+    }
+}
+function requireAll(conditionFunctions) {
+    return function (req, res, next) {
+        for (i in conditionFunctions) {
+            const f = conditionFunctions[i];
+            const succeeded = f(req);
+            if (!succeeded) {
+                res.redirect('/forbidden');
+                return;
+            }
+        }
+        next();
+    }
+}
+
+/*function RegistrarAuth(req, res, next) {
+    if (req.session.roles.some(r => r.name === 'Registrar')) {
+        next();
+    }
+    else {
+        res.redirect('/forbidden');
+    }
+}
+function ProprietorAuth(req, res, next) {
+    if (req.session.roles.some(r => r.name === 'Proprietor')) {
+        next();
+    }
+    else {
+        res.redirect('/forbidden');
+    }
+}
+function PrincipalAuth(req, res, next) {
+    if (req.session.roles.some(r => r.name === 'Principal')) {
+        next();
+    }
+    else {
+        res.redirect('/forbidden');
+    }
+}*/
 
 router.get('/apply', async function (req, res) {
     let classes = await classmanager.list();
@@ -22,15 +112,16 @@ router.post('/apply', async function (req, res) {
     let class_id = req.body.class_id;
     let phoneno = req.body.phoneno;
     await applicantmanager.create(firstname, middlename, lastname, dateofbirth, sex, age, class_id, address, phoneno);
-    res.redirect('listapplicants');
+
+    res.redirect('/listapplicants');
 })
-router.get('/listapplicants', async function (req, res) {
+router.get('/listapplicants', auth, requireAny([isAdminRequest, isRegistrarRequest,]), async function (req, res) {
     //let ID = req.params.ID;
     // let result1 = await applicantmanager.getClassName(ID);
     let result = await applicantmanager.list();
-    res.render('applicantslist', { data: result[0] });/*JSON.stringify({ data1: result1[0], data2: result2[0] }));*/
+    res.render('applicantslist', { layout: 'admin', data: result[0] });/*JSON.stringify({ data1: result1[0], data2: result2[0] }));*/
 });
-router.get('/application/admit/:ID', async function (req, res) {
+router.get('/application/admit/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest,]), async function (req, res) {
     let ID = req.params.ID;
     await applicantmanager.admit(ID);
     let result = await applicantmanager.getAdmittedStudent(ID);
@@ -49,19 +140,23 @@ router.get('/application/admit/:ID', async function (req, res) {
     res.redirect('/admissionlist');
 });
 
-router.get('/application/delete/:ID', async function (req, res) {
+router.get('/application/delete/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest, isPrincipalRequest]), async function (req, res) {
     let ID = req.params.ID;
-    let student = await applicantmanager.find(ID);
-    if (student == null || student == undefined) {
+    let applicant = await applicantmanager.find(ID);
+    let ApplicantEmail = applicant.email
+    if (applicant == null || applicant == undefined) {
         res.status(404).send("Applicant detail is not found");
     }
     else {
-        await studentmanager.Remove(ID);
+        await applicantmanager.Remove(ID);
         res.redirect('/listapplicants');
+        let email = req.session.email;
+        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        auditLog.insertAuditLog(' Applicant Detail deleted', `The details of the applicant ${ApplicantEmail} by  ${ip} with email ${email}`, email);
     }
 
 });
-router.get('/admissionlist', async function (req, res) {
+router.get('/admissionlist', auth, async function (req, res) {
     let result = await applicantmanager.listAdmitted();
     res.render('admissionlist', { data: result[0] });
 });

@@ -1,11 +1,48 @@
 body {
   padding-top: 56px;
 }
+.forbidden{
+   font-size:50px;
+    margin-bottom: 200px;
+    margin-top:100px;
+    margin-left:100px
+}
+.forbiddencode {
+  font-size:70px;
+   margin-left:500px;
+  margin-top:50px;
+  margin-bottom: 80px;
+}
+.Admin{
+  background-image: url('../images/books.jpg');
+  background-size:100vh;
+  padding-bottom: 400px;
+
+
+}.welcome {
+font-size:100px;
+padding-top: 200px;
+padding-bottom: 70px;
+}
+.To{
+font-size:70px;
+   margin-top:30px;
+  margin-bottom: 80px;
+}
+.dash{
+font-size:100px;
+   margin-top:30px;
+  margin-bottom: 80px;
+}
 #success_message{ display: none;}
 .sidebar{
      height:100vh;
      position: fixed;
    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+.title{
+  font-size:30px;
+  color: green;
 }
 .bg-img{
   background-image:url('/images/bg_img_4.png');

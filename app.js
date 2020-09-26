@@ -2,6 +2,11 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const handlebars = require('express-handlebars');
 const session = require('express-session');
+const UsersManager = require('./models/users.js');
+const usersmanager = new UsersManager();
+const AuditLog = require('./models/auditlog.js');
+const auditLog = new AuditLog();
+
 const app = express();
 const port = 4000;
 
@@ -46,16 +51,25 @@ function RegistrarAuth(req, res, next) {
         res.redirect('/forbidden');
     }
 }
+app.get('/getLogs', async (req, res) => {
+    let result = await auditLog.getLogs();
+    res.render('logs', { layout: 'admin', data: result[0] })
+});
 app.get('/forbidden', function (req, res) {
     res.render('forbidden');
 });
 
 
+app.get('/*', function (req, res, next) {
+    res.locals.name = req.session.name;
+    res.locals.isLoggedIn = req.session.isLoggedIn;
+    next();
+})
 
 app.get('/', function (req, res) {
     res.render('home');
 });
-app.get('/admin', function (req, res) {
+app.get('/admin', auth, function (req, res) {
     res.render('admindashboard', { layout: 'admin' });
 })
 
@@ -72,5 +86,8 @@ app.use('/categories', require('./myapi/categorycontroller'));
 
 
 
+
 app.listen(port);
 console.log('App listening on http://localhost:4000');
+
+//RegistrarAuth, adminAuth
