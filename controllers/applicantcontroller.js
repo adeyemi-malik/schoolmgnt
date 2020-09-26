@@ -113,7 +113,7 @@ router.post('/apply', async function (req, res) {
     let phoneno = req.body.phoneno;
     await applicantmanager.create(firstname, middlename, lastname, dateofbirth, sex, age, class_id, address, phoneno);
 
-    res.redirect('/listapplicants');
+    res.redirect('/');
 })
 router.get('/listapplicants', auth, requireAny([isAdminRequest, isRegistrarRequest,]), async function (req, res) {
     //let ID = req.params.ID;

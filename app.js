@@ -26,32 +26,49 @@ app.engine('hbs', handlebars({
     extname: 'hbs'
 }));
 
-function auth(req, res, next) {
-    if (req.session.isLoggedIn == true) {
+
+/*function auth(req, res, next) {
+    if (isAuthenticatedRequest(req)) {
         next();
     }
     else {
         res.redirect('/users/login')
     }
+}*/
+function isAdminRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin');
 }
 
-function adminAuth(req, res, next) {
-    if (req.session.roles.some(r => r.name === 'Admin')) {
-        next();
-    }
-    else {
-        res.redirect('/forbidden')
-    }
+function isRegistrarRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin');
 }
-function RegistrarAuth(req, res, next) {
-    if (req.session.roles.some(r => r.name === 'Registrar')) {
-        next();
-    }
-    else {
+function isProprietorRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin');
+}
+function isPrincipalRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin');
+}
+
+function isAuthenticatedRequest(req) {
+    return req.session.isLoggedIn == true;
+}
+function requireAny(conditionFunctions) {
+    return function (req, res, next) {
+        for (i in conditionFunctions) {
+            const f = conditionFunctions[i];
+            const succeeded = f(req);
+            if (succeeded) {
+                next();
+                return;
+            }
+        }
         res.redirect('/forbidden');
     }
 }
-app.get('/getLogs', async (req, res) => {
+
+
+
+app.get('/getLogs', isAuthenticatedRequest, requireAny(isAdminRequest), async (req, res) => {
     let result = await auditLog.getLogs();
     res.render('logs', { layout: 'admin', data: result[0] })
 });
@@ -69,7 +86,7 @@ app.get('/*', function (req, res, next) {
 app.get('/', function (req, res) {
     res.render('home');
 });
-app.get('/admin', auth, function (req, res) {
+app.get('/admin', isAuthenticatedRequest, requireAny([isAdminRequest, isRegistrarRequest, isPrincipalRequest, isProprietorRequest]), function (req, res) {
     res.render('admindashboard', { layout: 'admin' });
 })
 
