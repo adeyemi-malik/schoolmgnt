@@ -1,0 +1,22 @@
+<h3>List OF Classes</h3>
+
+<table class="table table-responsive table-striped table-bordered">
+    <thead>
+        <th>ID</th>
+        <th>ROLE NAME</th>
+        <th colspan='2'>ACTION</th>
+
+
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{ID}}</td>
+            <td>{{title}}</td>
+
+            <td> <a class="btn btn-sm btn-warning" href="/roles/edit/{{ID}}">EDIT</a></td>
+            <td><a class="btn btn-sm btn-danger" href="/roles/delete/{{ID}}">DELETE</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

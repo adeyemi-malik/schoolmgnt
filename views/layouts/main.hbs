@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>School Management</title>
+    <link rel='stylesheet' type='text/css' href="/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' href="/css/modern-business.css">
+    <link rel='stylesheet' type='text/css' href="/css/responsive.css">
+    <link rel='stylesheet' type='text/css' href="/css/normalize.css">
+    <link rel='stylesheet' type='text/css' href="/css/style.css">
+    <link rel='stylesheet' type='text/css' href="/css/color.css">
+    <link rel='stylesheet' type='text/css' href="/css/socialicons.css">
+    <link rel='stylesheet' type='text/css' href="/css/owl.default.min.css">
+    <link rel='stylesheet' type='text/css' href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/sweetalert.min.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>-->
+    <link rel='stylesheet' href="/fontawesome-free-5.14.0-web/css/all.css">
+    <link rel='stylesheet' href="/fontawesome-free-5.14.0-web/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href="/fontawesome-free-5.14.0-web/css/regular.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-12">
+                        <!-- Contact -->
+                        <ul class="content">
+                            <li><i class="fa fa-phone"></i>09020771581</li>
+                            <li><a href="mailto:info@yourdomain.com"><i
+                                        class="fa fa-envelope-o"></i>contact@preciousgift@gmail.com</a></li>
+                            <li><i class="fa fa-clock-o"></i>Opening: 8:00am - 5:00pm</li>
+                        </ul>
+                        <!-- End Contact -->
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <!-- Social -->
+                        <ul class="social">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                        </ul>
+                        <!-- End Social -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Topbar -->
+        <!-- Header Inner -->
+        <div class="header-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-12">
+                        <div class="logo">
+                            <a href="#"><img src="/images/favicon.png" alt="#"><span class="title">PGA</span></a>
+                        </div>
+                        <div class="mobile-menu"></div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-12">
+                        <!-- Header Widget -->
+                        <div class="header-widget">
+                            <div class="single-widget">
+                                <i class="fa fa-phone"></i>
+                                <h4>Call Now<span>(+234)902 077 1581</span></h4>
+                            </div>
+                            <div class="single-widget">
+                                <i class="fa fa-envelope-o"></i>
+                                <h4>Send Message<a href="#"><span></span></a>
+                                </h4>
+                            </div>
+                            <div class="single-widget">
+                                <i class="fa fa-map-marker"></i>
+                                <h4>Our Location<span>18,Ibara Housing Estate,Abeokuta, Ogun State, Nigeria</span></h4>
+                            </div>
+                        </div>
+                        <!--/ End Header Widget -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Header Inner -->
+        <!-- Header Menu -->
+        <div class="header-menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="navbar navbar-default">
+                            <div class="navbar-collapse">
+                                <!-- Main Menu -->
+                                <ul id="nav" class="nav menu navbar-nav">
+                                    <li class="active"><a href="/">Home<i class="fa fa-angle-down"></i></a>
+                                        <ul class="dropdown">
+                                            <li><a href="/">Homepage </a></li>
+                                            <li><a href="/admin">Admin </a></li>
+
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="#">Admission<i class="fa fa-angle-down"></i></a>
+                                        <ul class="dropdown">
+                                            <li><a href="/admissionlist">Admission list</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Events<i class="fa fa-angle-down"></i></a>
+                                        <ul class="dropdown">
+                                            <li><a href="#">Events</a></li>
+
+                                        </ul>
+                                    </li>
+                                    {{#if isLoggedIn}}
+                                    <li><a href="#" class="nav-link"><i class="fa fa-user"></i>{{name}}</a></li>
+                                    <li><a href="/users/logout" class="btn"><i class="fa fa-lock"></i>logout</a></li>
+                                    {{else}}
+                                    <li><a href="/users/login" class="btn"><i class="fa fa-user"></i>login</a></li>
+
+                                    <li><a href="/users/signup" class="btn"><i class="fa fa-user"></i>signup</a></li>
+                                    {{/if}}
+
+                                </ul>
+                                <!-- End Main Menu -->
+                                <!-- button -->
+                                <!-- <li>
+                                    <div class="button m-3">
+                                        <a href="/users/login" class="btn"><i class="fa fa-lock"></i>Login</a>
+                                    </div>
+                                </li>-->
+                                <ul>
+                                    <div class="button">
+                                        <a href="/users/login" class="btn"><i class="fa fa-login"></i>login</a>
+                                    </div>
+                                </ul>
+                                <ul>
+                                    <div class="button">
+                                        <a href="/apply" class="btn" id="applybutton"><i class="fa fa-pencil"></i>Apply
+                                            Now</a>
+                                    </div>
+                                </ul>
+                                <!-- <ul>
+                                    <div class="button m-3">
+                                        <a href="/users/logout" class="btn"><i class="fa fa-lock"></i>Logout</a>
+                                    </div>
+                                </ul>-->
+                                <!--/ End Button -->
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Header Menu -->
+    </header>
+
+
+    {{{body}}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.32.4/dist/sweetalert2.all.min.js"></script>-->
+    <script src="/js/sweetalert.min.js"></script>
+    <script src="/jquery/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="/js/site.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="js/jquery-migrate.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="/js/sweetalert2.all.min.js"></script>
+
+    <!-- Footer -->
+    <footer class="footer overlay section">
+        <!-- Footer Top -->
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- About -->
+                        <div class="single-widget about">
+
+                            <ul class="list">
+                                <li><i class="fa fa-phone"></i>Phone: 09020771581 </li>
+                                <li><i class="fa fa-envelope"></i>Email: <a
+                                        href="mailto:info@youremail.com">preciousgiftacada@gmail.com</a></li>
+                                <li><i class="fa fa-map-o"></i>Address:</li>
+                            </ul>
+                        </div>
+                        <!--/ End About -->
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-12">
+                        <!-- Useful Links -->
+                        <div class="single-widget useful-links">
+                            <h2>Useful Links</h2>
+                            <ul>
+                                <li><a href="/"><i class="fa fa-angle-right"></i>Home</a></li>
+                                <li><a href="#"><i class="fa fa-angle-right"></i>About Us</a></li>
+                                <li><a href="/"><i class="fa fa-angle-right"></i>Events</a></li>
+                                <li><a href="/"><i class="fa fa-angle-right"></i>Contact</a></li>
+                            </ul>
+                        </div>
+                        <!--/ End Useful Links -->
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-12 p-20">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Footer Top -->
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="bottom-head">
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- Social -->
+                                    <ul class="social">
+                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                    </ul>
+                                    <!-- End Social -->
+                                    <!-- Copyright -->
+                                    <div class="copyright">
+                                        <p>© Copyright 2020 <a href="#">PreciousGiftAcademy</a>. All Rights Reserved</p>
+                                    </div>
+                                    <!--/ End Copyright -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Footer Bottom -->
+    </footer>
+    <!--<footer class="fixed-bottom bg-dark footer overlay section">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your codeLearnersHub 2020</p>
+        </div>
+    </footer>-->
+    <script>
+
+        /* $('#applybutton').click(function () {
+
+             swal({
+                 title: "Good job!",
+                 text: "You clicked the button!",
+                 icon: "success"
+
+             });
+
+         });*/
+
+    </script>
+</body>
+
+</html>
