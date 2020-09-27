@@ -1,5 +1,5 @@
 const AppConfig = {
-    "apiBaseUrl": "http://localhost:4000"
+    "apiBaseUrl": ""//"http://localhost:4000"
 }
 const getCategories = async () => {
     let response = await fetch(AppConfig.apiBaseUrl + '/categories');

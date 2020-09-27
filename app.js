@@ -105,6 +105,6 @@ app.use('/categories', require('./myapi/categorycontroller'));
 
 
 app.listen(port);
-console.log('App listening on http://localhost:4000');
+console.log(`App listening on http://localhost:${port}`);
 
 //RegistrarAuth, adminAuth
