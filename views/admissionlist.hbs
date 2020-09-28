@@ -1,6 +1,10 @@
 <h3 class="text-center mb-2">Admission List</h3>
-
-<table class="table table-responsive-sm table-striped table-bordered table-hover">
+<div class="row">
+    <div class="col-4 mb-3">
+        <input class="form-control fa fa-search" id="myInput" type="text" placeholder="Search..">
+    </div>
+</div>
+<table class="table table-responsive-sm table-striped table-bordered table-hover table-dark">
     <thead class="thead-light">
         <th>ID</th>
         <th>FIRST NAME</th>
@@ -10,7 +14,7 @@
         <th>ADDRESS</th>
         <th>PHONE NUMBER</th>
     </thead>
-    <tbody>
+    <tbody id="tablerow">
         {{#each data}}
         <tr>
             <td>{{ID}}</td>

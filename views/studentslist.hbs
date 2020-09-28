@@ -1,6 +1,11 @@
 <h3 class="text-center m-3">List OF Students</h3>
+<div class="row">
+    <div class="col-4 mb-3">
+        <input class="form-control fa fa-search" id="myInput" type="text" placeholder="Search..">
+    </div>
+</div>
 
-<table class="table table-responsive table-striped table-bordered">
+<table class="table table-responsive table-striped table-bordered table-green table-dark">
     <thead class="thead-light">
         <th>ID</th>
         <th>FIRST NAME</th>
@@ -9,13 +14,12 @@
         <th>DATE OF BIRTH</th>
         <th>SEX</th>
         <th>AGE</th>
-        <th>CLASS</th>
         <th>ADDRESS</th>
         <th>PHONE NUMBER</th>
         <th>DATE ADMITTED</th>
         <th colspan="2">ACTION</th>
     </thead>
-    <tbody>
+    <tbody id="tablerow">
         {{#each data}}
         <tr>
             <td>{{ID}}</td>
@@ -25,7 +29,6 @@
             <td>{{dateofbirth}}</td>
             <td>{{sex}}</td>
             <td>{{age}}</td>
-            <td>{{currentclass}}</td>
             <td>{{address}}</td>
             <td>{{phoneno}}</td>
             <td>{{admissiondate}}</td>

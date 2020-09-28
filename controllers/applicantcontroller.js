@@ -118,8 +118,15 @@ router.post('/apply', async function (req, res) {
 router.get('/listapplicants', auth, requireAny([isAdminRequest, isRegistrarRequest,]), async function (req, res) {
     //let ID = req.params.ID;
     // let result1 = await applicantmanager.getClassName(ID);
-    let result = await applicantmanager.list();
-    res.render('applicantslist', { layout: 'admin', data: result[0] });/*JSON.stringify({ data1: result1[0], data2: result2[0] }));*/
+    let result1 = await applicantmanager.list();
+    console.log(result1);
+    let result2 = await applicantmanager.getClassNameList();
+    console.log(result2);
+    res.render('applicantslist', {
+        layout: 'admin',
+        data1: result1,
+        data2: result2
+    });/*JSON.stringify({ data1: result1[0], data2: result2[0] }));*/
 });
 router.get('/application/admit/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest,]), async function (req, res) {
     let ID = req.params.ID;

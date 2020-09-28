@@ -59,13 +59,15 @@ function requireAll(conditionFunctions) {
 }
 
 router.get('/createclass', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
-    let result = await classcategoryManager.list();
-    res.render('createclass', { layout: 'admin', data: result[0] });
+    let result = await classcategoryManager.getcategorynames();
+    res.render('createclass', { layout: 'admin', data: result });
 });
 router.post('/createclass', async function (req, res) {
     let classname = req.body.class_name;
-    let classcategory = req.body.class_category_id;
-    await classmanager.create(classname, classcategory);
+    let categoryname = req.body.categoryname;
+    let result = await classcategoryManager.getCategoryId(categoryname);
+    let class_category_id = result.ID;
+    await classmanager.create(classname, class_category_id);
     res.redirect('/classlist');
 });
 router.get('/classes/:id', async (req, res) => {
@@ -85,7 +87,8 @@ router.get('/classlist', auth, requireAny([isAdminRequest, isRegistrarRequest, i
 router.get('/class/edit/:ID', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
     let ID = req.params.ID;
     let result = await classmanager.find(ID);
-    res.render('editclass', { layout: 'admin', result });
+    console.log(result);
+    res.render('editclass', result);
 });
 router.post('/class/edit', async function (req, res) {
     let ID = req.body.ID

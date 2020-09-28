@@ -107,6 +107,7 @@ router.post('/students/edit/:ID', async function (req, res) {
     let age = req.body.age;
     let address = req.body.address;
     let dateofbirth = req.body.dateofbirth;
+    console.log(dateofbirth);
     let class_id = req.body.class_id;
     let admissiondate = req.body.admissiondate;
     let phoneno = req.body.phoneno;

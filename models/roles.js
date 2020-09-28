@@ -8,7 +8,7 @@ class RoleManager {
     async find(ID) {
         let findquery = `SELECT * FROM roles WHERE ID = ${ID}`;
         let result = await connection.query(findquery);
-        return result[0][0];
+        return result[0];
     }
 
     create(title) {
@@ -27,9 +27,10 @@ class RoleManager {
         return result[0];
     }
 
-    update(ID, title) {
-        let updateQuery = `UPDATE roles SET title = '${title}'where ID = ${ID}`;
-        connection.query(updateQuery);
+    async update(ID, title) {
+        let updateQuery = `UPDATE roles SET title = '${title}' WHERE ID = ${ID} `;
+        let result = await connection.query(updateQuery);
+        return result;
     }
 
     async Remove(ID) {

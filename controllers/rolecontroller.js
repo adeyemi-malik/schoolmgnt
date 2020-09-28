@@ -70,11 +70,11 @@ router.get('/roles/edit/:ID', auth, requireAny([isAdminRequest]), async function
     let result = await rolemanager.find(ID);
     res.render('Editrole', { layout: 'admin', result });
 });
-router.post('/roles/edit', auth, requireAny(isAdminRequest), async function (req, res) {
+router.post('/roles/edit/:ID', auth, requireAny([isAdminRequest]), async function (req, res) {
     let ID = req.body.ID;
     let title = req.body.title;
     await rolemanager.update(ID, title);
-    let email = req.session.email
+    let email = req.session.email;
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     auditLog.insertAuditLog(' Role modified ', `A role was modified in the role list by ${ip} with email ${email}`, email);
     res.redirect('/roles/list');

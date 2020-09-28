@@ -27,14 +27,14 @@ app.engine('hbs', handlebars({
 }));
 
 
-/*function auth(req, res, next) {
+function auth(req, res, next) {
     if (isAuthenticatedRequest(req)) {
         next();
     }
     else {
         res.redirect('/users/login')
     }
-}*/
+}
 function isAdminRequest(req) {
     return req.session.roles.some(r => r.title === 'Admin');
 }
@@ -68,9 +68,14 @@ function requireAny(conditionFunctions) {
 
 
 
-app.get('/getLogs', isAuthenticatedRequest, requireAny(isAdminRequest), async (req, res) => {
+app.get('/getLogs', auth, requireAny([isAdminRequest]), async (req, res) => {
     let result = await auditLog.getLogs();
     res.render('logs', { layout: 'admin', data: result[0] })
+});
+app.get('/editLogs/:ID', auth, requireAny([isAdminRequest]), async (req, res) => {
+    let ID = req.params.ID;
+    await auditLog.removeLog(ID);
+    res.redirect('/getLogs');
 });
 app.get('/forbidden', function (req, res) {
     res.render('forbidden');
@@ -86,7 +91,7 @@ app.get('/*', function (req, res, next) {
 app.get('/', function (req, res) {
     res.render('home');
 });
-app.get('/admin', isAuthenticatedRequest, requireAny([isAdminRequest, isRegistrarRequest, isPrincipalRequest, isProprietorRequest]), function (req, res) {
+app.get('/admin', auth, requireAny([isAdminRequest, isPrincipalRequest, isProprietorRequest, isRegistrarRequest]), function (req, res) {
     res.render('admindashboard', { layout: 'admin' });
 })
 

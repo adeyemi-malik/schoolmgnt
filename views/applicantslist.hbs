@@ -1,6 +1,10 @@
-<div class="justify-content-center m-3">List OF Applicants</div>
-
-<table class="table table-responsive table-striped table-bordered table-hover">
+<h3 class="text-center m-3">List OF Applicants</h3>
+<div class="row">
+    <div class="col-4 mb-3">
+        <input class="form-control fa fa-search" id="myInput" type="text" placeholder="Search..">
+    </div>
+</div>
+<table class="table table-responsive table-striped table-bordered table-hove table-dark">
     <thead class="thead-dark">
         <th>ID</th>
         <th>FIRST NAME</th>
@@ -9,13 +13,13 @@
         <th>DATE OF BIRTH</th>
         <th>SEX</th>
         <th>AGE</th>
-        <th>CLASS</th>
+        {{!-- <th>CLASS</th> --}}
         <th>ADDRESS</th>
         <th>PHONE NUMBER</th>
         <th colspan="2">Action</th>
     </thead>
-    <tbody>
-        {{#each data}}
+    <tbody id="tablerow">
+        {{#data1}}
         <tr>
             <td>{{ID}}</td>
             <td>{{firstname}}</td>
@@ -24,12 +28,22 @@
             <td>{{dateofbirth}}</td>
             <td>{{sex}}</td>
             <td>{{age}}</td>
-            <td>{{currentclass}}</td>
+
+            {{!-- <td>{{class_id}}</td> --}}
+
             <td>{{address}}</td>
             <td>{{phoneno}}</td>
             <td> <a class="btn btn-sm btn-warning" href="/application/admit/{{ID}}">ADMIT</a></td>
             <td><a class="btn btn-sm btn-danger" href="/application/delete/{{ID}}">DELETE</a></td>
         </tr>
-        {{/each}}
+        {{/data1}}
+
+
+
+
+
+
+
+
     </tbody>
 </table>

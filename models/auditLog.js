@@ -12,6 +12,11 @@ class AuditLog {
         let result = await connection.query(selectQuery);
         return result;
     }
+    async removeLog(ID) {
+        let deleteQuery = `DELETE FROM auditlog WHERE ID = ${ID}`;
+        let result = await connection.query(deleteQuery);
+        return result;
+    }
 }
 
 module.exports = AuditLog;

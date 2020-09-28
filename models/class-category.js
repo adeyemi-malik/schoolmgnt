@@ -3,13 +3,13 @@ class ClassCategoryManager {
     async find(ID) {
         let findquery = `SELECT * FROM class_category WHERE ID = ${ID}`;
         let result = await connection.query(findquery);
-        return result[0][0];
+        return result[0];
     }
-    /* async getCategoryId() {
-         let findquery = `SELECT ID FROM class_category`;
-         let result = await connection.query(findquery);
-         return result[0];
-     }*/
+    async getCategoryId() {
+        let findquery = `SELECT ID FROM class_category`;
+        let result = await connection.query(findquery);
+        return result[0];
+    }
 
     create(name) {
         let currentdate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
@@ -21,7 +21,16 @@ class ClassCategoryManager {
         let selectQuery = `SELECT * FROM class_category WHERE is_deleted = ${0}`;
         let result = await connection.query(selectQuery);
         return result[0];
-
+    }
+    async getcategorynames() {
+        let selectQuery = `SELECT name FROM class_category WHERE is_deleted = ${0}`;
+        let result = await connection.query(selectQuery);
+        return result[0];
+    }
+    async getCategoryId(categoryname) {
+        let selectQuery = `SELECT ID FROM class_category WHERE name = '${categoryname}' AND  is_deleted = ${0}`;
+        let result = await connection.query(selectQuery);
+        return result[0][0];
     }
 
     update(ID, name) {
@@ -33,7 +42,7 @@ class ClassCategoryManager {
 
     async Remove(ID) {
         let currentdate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        let deleteQuery = `UPDATE class_category SET is_deleted = ${1}, date_deleted = '${currentdate}' WHERE ID = ${ID}`;
+        let deleteQuery = `UPDATE class_category SET is_deleted = ${1} WHERE ID = ${ID}`;
         let result = await connection.query(deleteQuery);
         return result;
     }

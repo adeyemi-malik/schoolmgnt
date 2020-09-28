@@ -16,6 +16,11 @@ class StudentManager {
         await connection.query(insertQuery);
         return result;
     }
+    async getClassNameList() {
+        let selectQuery = `SELECT classes.class_name FROM classes INNER JOIN students ON students.class_id = classes.ID`;
+        let result = await connection.query(selectQuery);
+        return result[0];
+    }
 
     create(firstname, middlename, lastname, dateofbirth, sex, age, address, class_id, admissiondate, phoneno) {
         let currentdate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
@@ -32,7 +37,7 @@ class StudentManager {
 
     async update(ID, firstname, middlename, lastname, dateofbirth, sex, age, address, class_id, admissiondate, phoneno) {
         let currentdate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        let updateQuery = `UPDATE students SET firstname = '${firstname}',middlename = '${middlename}',lastname = '${lastname}',sex = '${sex}',dateofbirth = '${dateofbirth}',age = ${age},class_id = ${class_id},address = '${address}',admissiondate = ${admissiondate}, phoneno = '${phoneno}',last_modified = '${currentdate}' where ID = ${ID}`;
+        let updateQuery = `UPDATE students SET firstname ='${firstname}',middlename='${middlename}',lastname='${lastname}',sex='${sex}',dateofbirth='${dateofbirth}',age=${age},class_id=${class_id},address='${address}',admissiondate='${admissiondate}',phoneno='${phoneno}',last_modified='${currentdate}'where ID = ${ID}`;
         await connection.query(updateQuery);
     }
 

@@ -66,11 +66,12 @@ function congrats() {
 $(document).ready(function () {
     $("#myInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $("#usertable tr").filter(function () {
+        $("#tablerow tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 });
+
 /*unction loginsuccessful() {
     Swal.fire({
         title: "Login successful!",

@@ -109,7 +109,7 @@
                                             <li><a href="/listapplicants">Applicant list</a></li>
                                             <li><a href="/classlist">class list </a></li>
                                             <li><a href="/studentslist"> Students list </a></li>
-                                            <li><a href="/category/list"> Students list </a></li>
+                                            <li><a href="/categories/list"> Category list </a></li>
 
 
 
@@ -120,7 +120,7 @@
                                             <li><a href="/createclass">Create Class</a></li>
                                             <li><a href="/registerstudent">Register Student</a></li>
 
-                                            <li><a href='/createcategory'>Create Category</a></li>
+                                            <li><a href='/categories/create'>Create Category</a></li>
 
 
                                         </ul>
@@ -150,12 +150,12 @@
                                     </li>
                                     {{#if isLoggedIn}}
                                     <li><a href="#" class="nav-link"><i class="fa fa-user"></i>{{name}}</a></li>
+                                    <li><a href="/users/logout" class="btn"><i class="fa fa-lock"></i>logout</a></li>
                                     {{else}}
                                     <li><a href="/users/login" class="btn"><i class="fa fa-user"></i>login</a></li>
-                                    {{/if}}
-                                    <li><a href="/users/signup" class="btn"><i class="fa fa-user"></i>signup</a></li>
-                                    <li><a href="/users/logout" class="btn"><i class="fa fa-lock"></i>logout</a></li>
 
+                                    <li><a href="/users/signup" class="btn"><i class="fa fa-user"></i>signup</a></li>
+                                    {{/if}}
                                 </ul>
                                 <!-- End Main Menu -->
                                 <!-- button -->
@@ -201,10 +201,7 @@
                     <div class="col-lg-3 col-md-6 col-12">
                         <!-- About -->
                         <div class="single-widget about">
-                            <div class="logo"><a href="#"><img src="images/logo2.png" alt="#"></a></div>
-                            <p>Vivamus volutpat eros pulvinar velit laoreet, sit amet egestas erat dignissim. Lorem
-                                ipsum
-                                dolor sit amet, consectetur</p>
+
                             <ul class="list">
                                 <li><i class="fa fa-phone"></i>Phone: 09020771581 </li>
                                 <li><i class="fa fa-envelope"></i>Email: <a

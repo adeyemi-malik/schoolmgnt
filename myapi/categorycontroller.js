@@ -51,32 +51,34 @@ router.get('/', async function (req, res) {
     res.set('Content-Type', 'application/json');
     res.status(200).send(data);
 });
-router.get('/createcategory', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
+router.get('/create', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
+
     res.render('createcategory', { layout: 'admin' });
 })
-router.post('/createcategory', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
+router.post('/create', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
     let name = req.body.name;
     await classcategoryManager.create(name);
 });
-router.get('/category/list', auth, requireAny([isAdminRequest, isRegistrarRequest, isPrincipalRequest, isProprietorRequest,]), async function (req, res) {
+router.get('/list', auth, requireAny([isAdminRequest, isRegistrarRequest, isPrincipalRequest, isProprietorRequest,]), async function (req, res) {
     let categories = await classcategoryManager.list();
-    res.render('createcategory', { layout: 'admin', data: categories[0] });
+    res.render('categorylist', { layout: 'admin', data: categories });
 })
-router.get('/category/edit/:ID', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
+router.get('/edit/:ID', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
     let ID = req.params.ID;
     let result = await classcategoryManager.find(ID);
-    res.render('editcategory', { layout: 'admin', result });
+    console.log(result[0]);
+    res.render('editcategory', { layout: 'admin', data: result });
 });
-router.post('/category/edit', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
+router.post('/edit', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
     let ID = req.body.ID
     let name = req.body.name;
     await classcategoryManager.update(ID, name);
-    res.redirect('/category/list');
+    res.redirect('/categories/list');
 });
-router.get('/category/delete/:ID', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
+router.get('/delete/:ID', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
     let ID = req.params.ID;
     await classcategoryManager.Remove(ID);
-    res.redirect('/category/list');
+    res.redirect('/categories/list');
 });
 
 

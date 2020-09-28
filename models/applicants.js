@@ -46,7 +46,12 @@ class ApplicantManager {
     async list() {
         let selectQuery = `SELECT * FROM applicants WHERE is_deleted = ${0}`;
         let result = await connection.query(selectQuery);
-        return result;
+        return result[0];
+    }
+    async getClassNameList() {
+        let selectQuery = `SELECT classes.class_name FROM classes INNER JOIN applicants ON applicants.class_id = classes.ID`;
+        let result = await connection.query(selectQuery);
+        return result[0];
     }
     async getClassName(ID) {
         let selectQuery = `SELECT classes.class_name FROM classes INNER JOIN applicants ON applicants.class_id = classes.ID WHERE applicants.ID = ${ID}`;

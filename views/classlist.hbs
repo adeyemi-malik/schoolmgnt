@@ -1,13 +1,17 @@
-<h3>List OF Classes</h3>
-
-<table class="table table-responsive table-striped table-bordered">
+<h3 class="text-center mt-5 mb-5">List OF Classes</h3>
+<div class="row">
+    <div class="col-4 mb-3">
+        <input class="form-control fa fa-search" id="myInput" type="text" placeholder="Search..">
+    </div>
+</div>
+<table class="table table-responsive table-striped table-bordered table-dark">
     <thead class="thead-light">
         <th>ID</th>
         <th>CLASS NAME</th>
         <th>CLASS CATEGORY</th>
         <th colspan="2">ACTION</th>
     </thead>
-    <tbody>
+    <tbody id="tablerow">
         {{#each data}}
         <tr>
             <td>{{ID}}</td>

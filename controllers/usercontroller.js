@@ -132,7 +132,7 @@ router.post('/users/assignrole/:ID', auth, requireAny([isAdminRequest]), async f
     let result = await rolemanager.getRoleId(role);
     let role_id = result[0].ID;
     await user_rolemanager.create(user_id, role_id);
-    res.redirect('/userroles');
+    res.redirect('/usersroles');
 });
 router.get('/usersroles', auth, requireAny([isAdminRequest]), async function (req, res) {
     let result = await user_rolemanager.list();
@@ -149,9 +149,8 @@ router.get('/users/login', function (req, res) {
 });
 router.post('/users/login', async function (req, res) {
     let email = req.body.email;
-    console.log(email);
     let password = req.body.password;
-    console.log(password);
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     let user = await usersmanager.findByEmail(email);
     if (user == null || user == undefined) {
         let message = "<div class='alert alert-danger'>Incorrect email or password</div>";
@@ -176,7 +175,6 @@ router.post('/users/login', async function (req, res) {
         else {
             let message = "Incorrect email or password";
             res.render("login", { 'message': message });
-            const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
             auditLog.insertAuditLog('Failed Login', `failed login from ${ip} with email ${email}`, email);
             return;
         }
