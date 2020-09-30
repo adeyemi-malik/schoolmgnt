@@ -8,7 +8,12 @@ const AuditLog = require('./models/auditlog.js');
 const auditLog = new AuditLog();
 
 const app = express();
-const port = process.env.PORT || 3000;
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 3000;
+}
+app.listen(port);atus
+
 
 
 app.use(express.static(__dirname + '/public'));
