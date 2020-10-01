@@ -2,10 +2,10 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const handlebars = require('express-handlebars');
 const session = require('express-session');
-//const UsersManager = require('./models/users.js');
-//const usersmanager = new UsersManager();
-//const AuditLog = require('./models/auditlog.js');
-//const auditLog = new AuditLog();
+const UsersManager = require('./models/users.js');
+const usersmanager = new UsersManager();
+const AuditLog = require('./models/auditlog.js');
+const auditLog = new AuditLog();
 
 const app = express();
 let port = process.env.PORT;
