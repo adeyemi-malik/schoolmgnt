@@ -12,7 +12,7 @@ let port = process.env.PORT;
 if (port == null || port == "") {
     port = 3000;
 }
-app.listen(port);atus
+app.listen(port);
 
 
 
@@ -114,7 +114,6 @@ app.use('/categories', require('./myapi/categorycontroller'));
 
 
 
-app.listen(port);
 console.log(`App listening on http://localhost:${port}`);
 
 //RegistrarAuth, adminAuth
