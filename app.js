@@ -73,42 +73,42 @@ function requireAny(conditionFunctions) {
 
 
 
-// app.get('/getLogs', auth, requireAny([isAdminRequest]), async (req, res) => {
-//     let result = await auditLog.getLogs();
-//     res.render('logs', { layout: 'admin', data: result[0] })
-// });
-// app.get('/editLogs/:ID', auth, requireAny([isAdminRequest]), async (req, res) => {
-//     let ID = req.params.ID;
-//     await auditLog.removeLog(ID);
-//     res.redirect('/getLogs');
-// });
-// app.get('/forbidden', function (req, res) {
-//     res.render('forbidden');
-// });
+app.get('/getLogs', auth, requireAny([isAdminRequest]), async (req, res) => {
+    let result = await auditLog.getLogs();
+    res.render('logs', { layout: 'admin', data: result[0] })
+});
+app.get('/editLogs/:ID', auth, requireAny([isAdminRequest]), async (req, res) => {
+    let ID = req.params.ID;
+    await auditLog.removeLog(ID);
+    res.redirect('/getLogs');
+});
+app.get('/forbidden', function (req, res) {
+    res.render('forbidden');
+});
 
 
-// app.get('/*', function (req, res, next) {
-//     res.locals.name = req.session.name;
-//     res.locals.isLoggedIn = req.session.isLoggedIn;
-//     next();
-// })
+app.get('/*', function (req, res, next) {
+    res.locals.name = req.session.name;
+    res.locals.isLoggedIn = req.session.isLoggedIn;
+    next();
+})
 
 app.get('/', function (req, res) {
     res.render('home');
 });
-// app.get('/admin', auth, requireAny([isAdminRequest, isPrincipalRequest, isProprietorRequest, isRegistrarRequest]), function (req, res) {
-//     res.render('admindashboard', { layout: 'admin' });
-// })
+app.get('/admin', auth, requireAny([isAdminRequest, isPrincipalRequest, isProprietorRequest, isRegistrarRequest]), function (req, res) {
+    res.render('admindashboard', { layout: 'admin' });
+})
 
 
 
 
-// app.use(require('./controllers/usercontroller'));
-// app.use(require('./controllers/rolecontroller'));
-// app.use(require('./controllers/applicantController'));
-// app.use(require('./controllers/studentController'));
-// app.use(require('./controllers/classController'));
-// app.use('/categories', require('./myapi/categorycontroller'));
+app.use(require('./controllers/usercontroller'));
+app.use(require('./controllers/rolecontroller'));
+app.use(require('./controllers/applicantController'));
+app.use(require('./controllers/studentController'));
+app.use(require('./controllers/classController'));
+app.use('/categories', require('./myapi/categorycontroller'));
 
 
 
