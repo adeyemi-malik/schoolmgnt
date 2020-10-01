@@ -93,9 +93,9 @@ function requireAny(conditionFunctions) {
 //     next();
 // })
 
-// app.get('/', function (req, res) {
-//     res.render('home');
-// });
+app.get('/', function (req, res) {
+    res.render('home');
+});
 // app.get('/admin', auth, requireAny([isAdminRequest, isPrincipalRequest, isProprietorRequest, isRegistrarRequest]), function (req, res) {
 //     res.render('admindashboard', { layout: 'admin' });
 // })
