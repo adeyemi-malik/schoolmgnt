@@ -2,10 +2,8 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const handlebars = require('express-handlebars');
 const session = require('express-session');
-const UsersManager = require('./models/users.js');
-const usersmanager = new UsersManager();
-const {AuditLog} = require('./models/auditlog.js');
-const auditLog = new AuditLog();
+//const {AuditLog} = require('./models/auditlog.js');
+//const auditLog = new AuditLog();
 
 const app = express();
 let port = process.env.PORT;
@@ -73,15 +71,15 @@ function requireAny(conditionFunctions) {
 
 
 
-app.get('/getLogs', auth, requireAny([isAdminRequest]), async (req, res) => {
-    let result = await auditLog.getLogs();
-    res.render('logs', { layout: 'admin', data: result[0] })
-});
-app.get('/editLogs/:ID', auth, requireAny([isAdminRequest]), async (req, res) => {
-    let ID = req.params.ID;
-    await auditLog.removeLog(ID);
-    res.redirect('/getLogs');
-});
+// app.get('/getLogs', auth, requireAny([isAdminRequest]), async (req, res) => {
+//     let result = await auditLog.getLogs();
+//     res.render('logs', { layout: 'admin', data: result[0] })
+// });
+// app.get('/editLogs/:ID', auth, requireAny([isAdminRequest]), async (req, res) => {
+//     let ID = req.params.ID;
+//     await auditLog.removeLog(ID);
+//     res.redirect('/getLogs');
+// });
 app.get('/forbidden', function (req, res) {
     res.render('forbidden');
 });
@@ -103,11 +101,11 @@ app.get('/admin', auth, requireAny([isAdminRequest, isPrincipalRequest, isPropri
 
 
 
-app.use(require('./controllers/usercontroller'));
-app.use(require('./controllers/rolecontroller'));
-app.use(require('./controllers/applicantController'));
-app.use(require('./controllers/studentController'));
-app.use(require('./controllers/classController'));
+// app.use(require('./controllers/usercontroller'));
+// app.use(require('./controllers/rolecontroller'));
+// app.use(require('./controllers/applicantController'));
+// app.use(require('./controllers/studentController'));
+// app.use(require('./controllers/classController'));
 app.use('/categories', require('./myapi/categorycontroller'));
 
 
