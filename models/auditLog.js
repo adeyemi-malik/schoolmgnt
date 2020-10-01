@@ -19,4 +19,4 @@ class AuditLog {
     }
 }
 
-module.exports = AuditLog;
+module.exports = {AuditLog};
