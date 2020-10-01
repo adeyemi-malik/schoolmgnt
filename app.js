@@ -103,7 +103,7 @@ app.get('/admin', auth, requireAny([isAdminRequest, isPrincipalRequest, isPropri
 
 // app.use(require('./controllers/usercontroller'));
 // app.use(require('./controllers/rolecontroller'));
-// app.use(require('./controllers/applicantController'));
+app.use(require('./controllers/applicantController'));
 // app.use(require('./controllers/studentController'));
 // app.use(require('./controllers/classController'));
 app.use('/categories', require('./myapi/categorycontroller'));
