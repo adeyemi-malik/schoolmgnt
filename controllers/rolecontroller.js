@@ -4,8 +4,8 @@ const RoleManager = require('../models/roles.js');
 const router = express.Router();
 const session = require('express-session')
 const rolemanager = new RoleManager();
-//const {AuditLog} = require('../models/auditlog');
-//const auditLog = new AuditLog();
+const {AuditLog} = require('../models/auditlog');
+const auditLog = new AuditLog();
 
 function auth(req, res, next) {
     if (isAuthenticatedRequest(req)) {
@@ -57,7 +57,7 @@ router.post('/roles/create', auth, requireAny([isAdminRequest]), (req, res) => {
     rolemanager.create(title);
     let email = req.session.email
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    //auditLog.insertAuditLog('New Role Added ', `A new role was added to the role list by ${ip} with email ${email}`, email);
+    auditLog.insertAuditLog('New Role Added ', `A new role was added to the role list by ${ip} with email ${email}`, email);
     res.redirect('/roles/list');
 });
 
@@ -76,7 +76,7 @@ router.post('/roles/edit/:ID', auth, requireAny([isAdminRequest]), async functio
     await rolemanager.update(ID, title);
     let email = req.session.email;
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    //auditLog.insertAuditLog(' Role modified ', `A role was modified in the role list by ${ip} with email ${email}`, email);
+    auditLog.insertAuditLog(' Role modified ', `A role was modified in the role list by ${ip} with email ${email}`, email);
     res.redirect('/roles/list');
 });
 router.get('/roles/delete/:ID', auth, requireAny(isAdminRequest), async function (req, res) {
@@ -84,7 +84,7 @@ router.get('/roles/delete/:ID', auth, requireAny(isAdminRequest), async function
     let result = await rolemanager.Remove(ID);
     let email = req.session.email
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    //auditLog.insertAuditLog(' Role deleted ', `A role was deleted from the role list by ${ip} with email ${email}`, email);
+    auditLog.insertAuditLog(' Role deleted ', `A role was deleted from the role list by ${ip} with email ${email}`, email);
     res.redirect('/roles/list');
 });
 

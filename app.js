@@ -4,8 +4,8 @@ const handlebars = require('express-handlebars');
 const session = require('express-session');
 const UsersManager = require('./models/users.js');
 const usersmanager = new UsersManager();
-//const AuditLog = require('./models/auditlog.js');
-//const auditLog = new AuditLog();
+const {AuditLog} = require('./models/auditlog.js');
+const auditLog = new AuditLog();
 
 const app = express();
 let port = process.env.PORT;
@@ -74,12 +74,12 @@ function requireAny(conditionFunctions) {
 
 
 app.get('/getLogs', auth, requireAny([isAdminRequest]), async (req, res) => {
-    let result = []; //await auditLog.getLogs();
+    let result = await auditLog.getLogs();
     res.render('logs', { layout: 'admin', data: result[0] })
 });
 app.get('/editLogs/:ID', auth, requireAny([isAdminRequest]), async (req, res) => {
     let ID = req.params.ID;
-    //await auditLog.removeLog(ID);
+    await auditLog.removeLog(ID);
     res.redirect('/getLogs');
 });
 app.get('/forbidden', function (req, res) {

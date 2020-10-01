@@ -6,8 +6,8 @@ const StudentManager = require('../models/student');
 const studentmanager = new StudentManager();
 const { ClassManager } = require('../models/classes');
 const classmanager = new ClassManager();
-//const {AuditLog} = require('../models/auditlog');
-//const auditLog = new AuditLog();
+const {AuditLog} = require('../models/auditlog');
+const auditLog = new AuditLog();
 const Swal = require('sweetalert2');
 
 
@@ -159,7 +159,7 @@ router.get('/application/delete/:ID', auth, requireAny([isAdminRequest, isRegist
         res.redirect('/listapplicants');
         let email = req.session.email;
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-        //auditLog.insertAuditLog(' Applicant Detail deleted', `The details of the applicant ${ApplicantEmail} by  ${ip} with email ${email}`, email);
+        auditLog.insertAuditLog(' Applicant Detail deleted', `The details of the applicant ${ApplicantEmail} by  ${ip} with email ${email}`, email);
     }
 
 });

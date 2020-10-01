@@ -6,8 +6,8 @@ const UsersManager = require('../models/users.js');
 const router = express.Router();
 const session = require('express-session')
 const usersmanager = new UsersManager();
-//const {AuditLog} = require('../models/auditlog');
-//const auditLog = new AuditLog();
+const {AuditLog} = require('../models/auditlog');
+const auditLog = new AuditLog();
 const RoleManager = require('../models/roles.js');
 const rolemanager = new RoleManager();
 const User_roleManager = require('../models/user_role.js');
@@ -80,7 +80,7 @@ router.post('/users/signup', async function (req, res) {
     res.render("signup", { 'message': message });
     res.redirect('/users/login');
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    //auditLog.insertAuditLog('User account created', `successful creation of account by ${ip} with email ${email}`, email);
+    auditLog.insertAuditLog('User account created', `successful creation of account by ${ip} with email ${email}`, email);
 
 });
 router.get('/users/edit/:ID', auth, requireAny([isAdminRequest]), async function (req, res) {
@@ -113,7 +113,7 @@ router.post('/users/edit', auth, requireAny([isAdminRequest]), async function (r
         usersmanager.update(ID, firstname, lastname, email, phone_no, hashedpassword);
         res.redirect('/users/login');
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-        //auditLog.insertAuditLog('User account modified', `successful modification of account by ${ip} with email ${email}`, email);
+        auditLog.insertAuditLog('User account modified', `successful modification of account by ${ip} with email ${email}`, email);
     }
 
 });
@@ -169,13 +169,13 @@ router.post('/users/login', async function (req, res) {
             req.session.roles = roles || [];
             res.redirect('/');
             const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-            //auditLog.insertAuditLog(' succesful Login', `successful login from ${ip} with email ${email}`, email);
+            auditLog.insertAuditLog(' succesful Login', `successful login from ${ip} with email ${email}`, email);
             res.redirect('/');
         }
         else {
             let message = "Incorrect email or password";
             res.render("login", { 'message': message });
-            //auditLog.insertAuditLog('Failed Login', `failed login from ${ip} with email ${email}`, email);
+            auditLog.insertAuditLog('Failed Login', `failed login from ${ip} with email ${email}`, email);
             return;
         }
     }
@@ -194,7 +194,7 @@ router.get('/users/logout', (req, res) => {
         let email = req.session.email;
         res.redirect('/');
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-        //auditLog.insertAuditLog('Logout', `logout from ${ip} with email ${email}`, email);
+        auditLog.insertAuditLog('Logout', `logout from ${ip} with email ${email}`, email);
 
     }
 });
