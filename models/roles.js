@@ -1,8 +1,6 @@
+import connection from '../database/dbconnection.js';
 
-
-const connection = require('../database/dbconnection');
-
-class RoleManager {
+export default class RoleManager {
 
 
     async find(ID) {
@@ -45,10 +43,9 @@ class RoleManager {
 
 
 
-class Role {
+export  class Role {
     constructor(ID, title) {
         this.ID = ID;
         this.title = title;
     }
 }
-module.exports = RoleManager;

@@ -1,6 +1,6 @@
-const connection = require('../database/dbconnection')
+import connection from '../database/dbconnection.js';
 
-class ClassManager {
+export default class ClassManager {
 
 
 
@@ -46,11 +46,10 @@ class ClassManager {
 
 
 
-class Class {
+export  class Class {
     constructor(ID, classname, category) {
         this.ID = ID;
         this.classname = classname;
         this.category = category;
     }
 }
-module.exports = { ClassManager, Class };

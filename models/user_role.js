@@ -1,10 +1,6 @@
+import connection from '../database/dbconnection.js';
 
-
-const connection = require('../database/dbconnection');
-
-class User_roleManager {
-
-
+export default class User_roleManager {
     async find(ID) {
         let findquery = `SELECT * FROM user_role WHERE ID = ${ID}`;
         let result = await connection.query(findquery);
@@ -33,13 +29,9 @@ class User_roleManager {
         let result = await connection.query(deleteQuery);
         return result;
     }
-
 }
 
-
-
-
-class User_role {
+export class User_role {
     constructor(ID, user_id, role_id) {
         this.ID = ID;
         this.user_id = user_id;
@@ -47,4 +39,3 @@ class User_role {
 
     }
 }
-module.exports = User_roleManager;

@@ -1,5 +1,6 @@
-const express = require('express');
-const { ClassCategoryManager, Category } = require('../models/class-category');
+import express from 'express';
+import ClassCategoryManager from '../models/class-category.js';
+import {Category } from '../models/class-category.js';
 
 
 const router = express.Router();
@@ -82,4 +83,4 @@ router.get('/delete/:ID', auth, requireAny([isAdminRequest, isProprietorRequest]
 });
 
 
-module.exports = router;
+export default router;

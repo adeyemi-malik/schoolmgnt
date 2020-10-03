@@ -1,10 +1,9 @@
 
-const express = require('express');
-const RoleManager = require('../models/roles.js');
+import express from 'express';
+import RoleManager from '../models/roles.js';
 const router = express.Router();
-const session = require('express-session')
 const rolemanager = new RoleManager();
-const {AuditLog} = require('../models/auditlog');
+import  AuditLog from '../models/auditlog.js';
 const auditLog = new AuditLog();
 
 function auth(req, res, next) {
@@ -87,6 +86,4 @@ router.get('/roles/delete/:ID', auth, requireAny(isAdminRequest), async function
     auditLog.insertAuditLog(' Role deleted ', `A role was deleted from the role list by ${ip} with email ${email}`, email);
     res.redirect('/roles/list');
 });
-
-
-module.exports = router;
+export default router;

@@ -1,6 +1,5 @@
-const connection = require('../database/dbconnection');
-
-class users {
+import connection from '../database/dbconnection.js';
+export class users {
     constructor(ID, firstname, lastname, email, phone_no) {
         this.ID = ID;
         this.firstname = firstname;
@@ -10,7 +9,7 @@ class users {
     }
 }
 
-class UsersManager {
+export default class UsersManager {
 
     async find(ID) {
         let findquery = `SELECT * FROM users WHERE ID = ${ID}`;
@@ -63,7 +62,4 @@ class UsersManager {
         let result = await connection.query(deleteQuery);
         return result;
     }
-
-
 }
-module.exports = UsersManager;

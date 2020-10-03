@@ -1,8 +1,9 @@
-const express = require('express');
-const { ClassManager, Class } = require('../models/classes');
+import express from 'express';
+import ClassManager from '../models/classes.js'
+import {Class} from '../models/classes.js';
 const router = express.Router();
 const classmanager = new ClassManager();
-const { ClassCategoryManager, Category } = require('../models/class-category');
+import  ClassCategoryManager from '../models/class-category.js';
 const classcategoryManager = new ClassCategoryManager();
 
 
@@ -103,5 +104,4 @@ router.get('/class/delete/:ID', auth, requireAny([isAdminRequest, isProprietorRe
     res.redirect('/classlist');
 });
 
-
-module.exports = router;
+export default router;

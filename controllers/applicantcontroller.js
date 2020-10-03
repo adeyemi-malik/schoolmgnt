@@ -1,14 +1,13 @@
-const express = require('express');
-const ApplicantManager = require('../models/applicants');
+import express from 'express';
+import ApplicantManager from '../models/applicants.js';
+import StudentManager from '../models/student.js';
+import ClassManager from '../models/classes.js';
+import AuditLog from'../models/auditlog.js';
 const router = express.Router();
 const applicantmanager = new ApplicantManager();
-const StudentManager = require('../models/student');
-const studentmanager = new StudentManager();
-const { ClassManager } = require('../models/classes');
 const classmanager = new ClassManager();
-const {AuditLog} = require('../models/auditlog');
+const studentmanager = new StudentManager();
 const auditLog = new AuditLog();
-const Swal = require('sweetalert2');
 
 
 function auth(req, res, next) {
@@ -169,7 +168,4 @@ router.get('/admissionlist', auth, async function (req, res) {
 });
 
 
-
-
-
-module.exports = router;
+export default router;

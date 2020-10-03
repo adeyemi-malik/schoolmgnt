@@ -1,8 +1,8 @@
-const express = require('express');
-const StudentManager = require('../models/student');
+import express from 'express';
+import StudentManager from '../models/student.js';
 const router = express.Router();
 const studentmanager = new StudentManager();
-const { ClassManager } = require('../models/classes');
+import ClassManager  from '../models/classes.js';
 const classmanager = new ClassManager();
 
 
@@ -128,6 +128,5 @@ router.get('/students/delete/:ID', auth, requireAny([isAdminRequest, isRegistrar
 
 });
 
+export default router;
 
-
-module.exports = router;

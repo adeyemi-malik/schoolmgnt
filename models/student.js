@@ -1,5 +1,5 @@
-const connection = require('../database/dbconnection')
-class StudentManager {
+import connection from '../database/dbconnection.js';
+export default class StudentManager {
 
 
     async find(ID) {
@@ -52,7 +52,7 @@ class StudentManager {
 
 }
 
-class student {
+export  class student {
     constructor(ID, firstname, middlename, lastname, sex, dateofbirth, age, address, class_id, admissiondate) {
         this.ID = ID;
         this.firstname = firstname;
@@ -66,4 +66,3 @@ class student {
         this.admissiondate = admissiondate;
     }
 }
-module.exports = StudentManager;

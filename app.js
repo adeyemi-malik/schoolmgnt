@@ -1,23 +1,21 @@
-const express = require('express');
-const bodyparser = require('body-parser');
-const handlebars = require('express-handlebars');
-const session = require('express-session');
-//const {AuditLog} = require('./models/auditlog.js');
-//const auditLog = new AuditLog();
-
+import express  from 'express';
+import bodyparser from 'body-parser';
+import handlebars from 'express-handlebars';
+import path from 'path';
+import session from'express-session';
+import userRouter from './controllers/usercontroller.js';
+import roleRouter from './controllers/rolecontroller.js';
+import applicantRouter from './controllers/applicantcontroller.js';
+import studentRouter from './controllers/studentcontroller.js';
+import classRouter from './controllers/classcontroller.js';
+import categoryRouter from './myapi/categorycontroller.js';
+import AuditLog from './models/auditlog.js';
+const auditLog = new AuditLog();
+const __dirname = path.resolve();
 const app = express();
-let port = process.env.PORT;
-if (port == null || port == "") {
-    port = 3000;
-}
-app.listen(port);
-
-
+const port = process.env.PORT || 5004;
 
 app.use(express.static(__dirname + '/public'));
-
-
-
 app.use(bodyparser());
 app.use(session({
     saveUninitialized: true,
@@ -71,15 +69,15 @@ function requireAny(conditionFunctions) {
 
 
 
-// app.get('/getLogs', auth, requireAny([isAdminRequest]), async (req, res) => {
-//     let result = await auditLog.getLogs();
-//     res.render('logs', { layout: 'admin', data: result[0] })
-// });
-// app.get('/editLogs/:ID', auth, requireAny([isAdminRequest]), async (req, res) => {
-//     let ID = req.params.ID;
-//     await auditLog.removeLog(ID);
-//     res.redirect('/getLogs');
-// });
+app.get('/getLogs', auth, requireAny([isAdminRequest]), async (req, res) => {
+    let result = await auditLog.getLogs();
+    res.render('logs', { layout: 'admin', data: result[0] })
+});
+app.get('/editLogs/:ID', auth, requireAny([isAdminRequest]), async (req, res) => {
+    let ID = req.params.ID;
+    await auditLog.removeLog(ID);
+    res.redirect('/getLogs');
+});
 app.get('/forbidden', function (req, res) {
     res.render('forbidden');
 });
@@ -101,17 +99,13 @@ app.get('/admin', auth, requireAny([isAdminRequest, isPrincipalRequest, isPropri
 
 
 
-// app.use(require('./controllers/usercontroller'));
-// app.use(require('./controllers/rolecontroller'));
-app.use(require('./controllers/applicantController'));
-// app.use(require('./controllers/studentController'));
-app.use(require('./controllers/classController'));
-app.use('/categories', require('./myapi/categorycontroller'));
+app.use(userRouter);
+app.use(roleRouter);
+app.use(applicantRouter);
+app.use(studentRouter);
+app.use(classRouter);
+app.use('/categories', categoryRouter);
 
 
-
-
-
+app.listen(port);
 console.log(`App listening on http://localhost:${port}`);
-
-//RegistrarAuth, adminAuth

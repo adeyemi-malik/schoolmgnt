@@ -1,19 +1,17 @@
 
 
-const express = require('express');
-const bycryt = require('bcrypt');
-const UsersManager = require('../models/users.js');
+import express from 'express';
+import bycryt from 'bcrypt';
+import UsersManager from '../models/users.js';
 const router = express.Router();
-const session = require('express-session')
 const usersmanager = new UsersManager();
-const {AuditLog} = require('../models/auditlog');
+import  AuditLog from '../models/auditlog.js';
 const auditLog = new AuditLog();
-const RoleManager = require('../models/roles.js');
+import RoleManager from '../models/roles.js';
 const rolemanager = new RoleManager();
-const User_roleManager = require('../models/user_role.js');
+import User_roleManager from '../models/user_role.js';
 const user_rolemanager = new User_roleManager();
-const Swal = require('sweetalert2');
-const swal = new Swal();
+
 
 function auth(req, res, next) {
     if (isAuthenticatedRequest(req)) {
@@ -198,4 +196,4 @@ router.get('/users/logout', (req, res) => {
 
     }
 });
-module.exports = router;
+export default router;

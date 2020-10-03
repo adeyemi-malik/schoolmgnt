@@ -1,5 +1,5 @@
-const connection = require('../database/dbconnection')
-class ApplicantManager {
+import connection from '../database/dbconnection.js';
+export default class ApplicantManager {
 
 
     async find(ID) {
@@ -77,7 +77,7 @@ class ApplicantManager {
 
 }
 
-class Applicant {
+export class Applicant {
     constructor(ID, firstname, middlename, lastname, dateofbirth, sex, age, class_id, address, phoneno, is_admitted, is_deleted, date_created, last_modified, date_deleted) {
         this.ID = ID;
         this.firstname = firstname;
@@ -96,6 +96,3 @@ class Applicant {
         this.date_deleted = date_deleted;
     }
 }
-
-
-module.exports = ApplicantManager;

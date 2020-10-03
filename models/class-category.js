@@ -1,5 +1,5 @@
-const connection = require('../database/dbconnection')
-class ClassCategoryManager {
+import connection from '../database/dbconnection.js';
+export default class ClassCategoryManager {
     async find(ID) {
         let findquery = `SELECT * FROM class_category WHERE ID = ${ID}`;
         let result = await connection.query(findquery);
@@ -48,12 +48,9 @@ class ClassCategoryManager {
     }
 }
 
-class Category {
+export class Category {
     constructor(ID, name) {
         this.ID = ID;
         this.name = name;
     }
 }
-
-module.exports = { ClassCategoryManager, Category }
-

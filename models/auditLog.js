@@ -1,7 +1,7 @@
 
-const connection = require('../database/dbconnection')
+import connection from '../database/dbconnection.js';
 
-class AuditLog {
+export default class AuditLog {
     insertAuditLog(action, detail, performedby) {
         let currentDate = new Date().toISOString().split("T")[0];
         let insertQuery = `INSERT INTO auditlog(action, detail, performedby, date_performed) VALUES('${action}', '${detail}', '${performedby}','${currentDate}')`;
@@ -18,5 +18,3 @@ class AuditLog {
         return result;
     }
 }
-
-module.exports = {AuditLog};
