@@ -33,7 +33,7 @@ function isAuthenticatedRequest(req) {
 }
 function requireAny(conditionFunctions) {
     return function (req, res, next) {
-        for (i in conditionFunctions) {
+        for ( var i in conditionFunctions) {
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (succeeded) {
@@ -46,7 +46,7 @@ function requireAny(conditionFunctions) {
 }
 function requireAll(conditionFunctions) {
     return function (req, res, next) {
-        for (i in conditionFunctions) {
+        for ( var i in conditionFunctions) {
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (!succeeded) {
