@@ -1,8 +1,8 @@
-import express  from 'express';
+import express from 'express';
 import bodyparser from 'body-parser';
 import handlebars from 'express-handlebars';
 import path from 'path';
-import session from'express-session';
+import session from 'express-session';
 import userRouter from './controllers/usercontroller.js';
 import roleRouter from './controllers/rolecontroller.js';
 import applicantRouter from './controllers/applicantcontroller.js';
@@ -41,21 +41,23 @@ function isAdminRequest(req) {
 }
 
 function isRegistrarRequest(req) {
-    return req.session.roles.some(r => r.title === 'Admin');
+    return req.session.roles.some(r => r.title === 'Registrar');
 }
+
 function isProprietorRequest(req) {
-    return req.session.roles.some(r => r.title === 'Admin');
+    return req.session.roles.some(r => r.title === 'Proprietor');
 }
 function isPrincipalRequest(req) {
-    return req.session.roles.some(r => r.title === 'Admin');
+    return req.session.roles.some(r => r.title === 'Principal');
 }
 
 function isAuthenticatedRequest(req) {
     return req.session.isLoggedIn == true;
 }
+
 function requireAny(conditionFunctions) {
     return function (req, res, next) {
-        for (i in conditionFunctions) {
+        for (var i in conditionFunctions) {
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (succeeded) {
@@ -94,7 +96,8 @@ app.get('/', function (req, res) {
 });
 app.get('/admin', auth, requireAny([isAdminRequest, isPrincipalRequest, isProprietorRequest, isRegistrarRequest]), function (req, res) {
     res.render('admindashboard', { layout: 'admin' });
-})
+});
+
 
 
 

@@ -5,7 +5,7 @@ import bycryt from 'bcrypt';
 import UsersManager from '../models/users.js';
 const router = express.Router();
 const usersmanager = new UsersManager();
-import  AuditLog from '../models/auditlog.js';
+import AuditLog from '../models/auditlog.js';
 const auditLog = new AuditLog();
 import RoleManager from '../models/roles.js';
 const rolemanager = new RoleManager();
@@ -31,7 +31,11 @@ function isAuthenticatedRequest(req) {
 }
 function requireAny(conditionFunctions) {
     return function (req, res, next) {
+<<<<<<< HEAD
+        for (var i in conditionFunctions) {
+=======
         for ( var i in conditionFunctions) {
+>>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (succeeded) {

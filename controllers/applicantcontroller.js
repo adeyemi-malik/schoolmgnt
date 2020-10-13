@@ -2,7 +2,7 @@ import express from 'express';
 import ApplicantManager from '../models/applicants.js';
 import StudentManager from '../models/student.js';
 import ClassManager from '../models/classes.js';
-import AuditLog from'../models/auditlog.js';
+import AuditLog from '../models/auditlog.js';
 const router = express.Router();
 const applicantmanager = new ApplicantManager();
 const classmanager = new ClassManager();
@@ -46,7 +46,11 @@ function isAuthenticatedRequest(req) {
 }
 function requireAny(conditionFunctions) {
     return function (req, res, next) {
+<<<<<<< HEAD
+        for (var i in conditionFunctions) {
+=======
         for ( var i in conditionFunctions) {
+>>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (succeeded) {
@@ -59,7 +63,11 @@ function requireAny(conditionFunctions) {
 }
 function requireAll(conditionFunctions) {
     return function (req, res, next) {
+<<<<<<< HEAD
+        for (var i in conditionFunctions) {
+=======
         for ( var i in conditionFunctions) {
+>>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (!succeeded) {

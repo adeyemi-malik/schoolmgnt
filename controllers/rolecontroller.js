@@ -3,7 +3,7 @@ import express from 'express';
 import RoleManager from '../models/roles.js';
 const router = express.Router();
 const rolemanager = new RoleManager();
-import  AuditLog from '../models/auditlog.js';
+import AuditLog from '../models/auditlog.js';
 const auditLog = new AuditLog();
 
 function auth(req, res, next) {
@@ -23,7 +23,11 @@ function isAuthenticatedRequest(req) {
 }
 function requireAny(conditionFunctions) {
     return function (req, res, next) {
+<<<<<<< HEAD
+        for (var i in conditionFunctions) {
+=======
         for ( var i in conditionFunctions) {
+>>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (succeeded) {
