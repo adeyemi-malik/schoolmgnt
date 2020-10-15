@@ -1,6 +1,17 @@
 body {
   padding-top: 56px;
 }
+#applybutton{
+ border-radius:50%;
+ background-color: #00B16A;
+
+}
+.aboutinfo{
+ border-radius:2px;
+}
+.aboutimg{
+ border-radius:2px;
+}
 .forbidden{
    font-size:50px;
     margin-bottom: 200px;

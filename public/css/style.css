@@ -43,7 +43,7 @@ Version:	1.0
 .header{
 	background-color:#fff;
 }
-.header .navbar-collapse{
+.header .navbarr-collapse{
 	padding:0;
 }
 /* Topbar */
@@ -141,14 +141,14 @@ Version:	1.0
 	background: #f6f6f6;
 	z-index: 3333;
 }
-.header .navbar {
+.header .navbarr {
 	background: none;
 	box-shadow: none;
 	border: none;
 	position: relative;
 	padding: 0;
 }
-.navbar-nav {
+.navbarr-nav {
 	display: block;
 }
 .header .nav li {

@@ -4,6 +4,7 @@ import handlebars from 'express-handlebars';
 import path from 'path';
 import session from 'express-session';
 import userRouter from './controllers/usercontroller.js';
+import contactRouter from './controllers/contactcontroller.js';
 import roleRouter from './controllers/rolecontroller.js';
 import applicantRouter from './controllers/applicantcontroller.js';
 import studentRouter from './controllers/studentcontroller.js';
@@ -36,6 +37,12 @@ function auth(req, res, next) {
         res.redirect('/users/login')
     }
 }
+function isOfficialRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'|| 'Registrar'||'Principal');
+}
+function isAdminorRegistrarRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'||'Registrar');
+}
 function isAdminRequest(req) {
     return req.session.roles.some(r => r.title === 'Admin');
 }
@@ -64,8 +71,11 @@ function requireAny(conditionFunctions) {
                 next();
                 return;
             }
+            else {
+                res.redirect('/forbidden');
+            }
         }
-        res.redirect('/forbidden');
+
     }
 }
 
@@ -74,11 +84,6 @@ function requireAny(conditionFunctions) {
 app.get('/getLogs', auth, requireAny([isAdminRequest]), async (req, res) => {
     let result = await auditLog.getLogs();
     res.render('logs', { layout: 'admin', data: result[0] })
-});
-app.get('/editLogs/:ID', auth, requireAny([isAdminRequest]), async (req, res) => {
-    let ID = req.params.ID;
-    await auditLog.removeLog(ID);
-    res.redirect('/getLogs');
 });
 app.get('/forbidden', function (req, res) {
     res.render('forbidden');
@@ -91,10 +96,14 @@ app.get('/*', function (req, res, next) {
     next();
 })
 
+app.get('/about', (req, res) => {
+    res.render('aboutus');
+});
+
 app.get('/', function (req, res) {
     res.render('home');
 });
-app.get('/admin', auth, requireAny([isAdminRequest, isPrincipalRequest, isProprietorRequest, isRegistrarRequest]), function (req, res) {
+app.get('/admin', auth, requireAny([isOfficialRequest]), function (req, res) {
     res.render('admindashboard', { layout: 'admin' });
 });
 
@@ -103,6 +112,7 @@ app.get('/admin', auth, requireAny([isAdminRequest, isPrincipalRequest, isPropri
 
 
 app.use(userRouter);
+app.use(contactRouter);
 app.use(roleRouter);
 app.use(applicantRouter);
 app.use(studentRouter);

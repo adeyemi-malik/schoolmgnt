@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row mt-5 mb-5">
+        <div class="col-md-7 offset-3">
+            <div class="card">
+                <div class="card-header text-center">CONTACT FORM </div>
+                <form method="POST" action="/contact/create">
+
+                    <div class="card-body">
+                        <div class="form-group ">
+                            <label>NAME</label>
+                            <input class="form-control" name='name' type="text" placeholder="Your Name" required />
+                        </div>
+                        <div class="form-group">
+                            <label>EMAIL</label>
+                            <input class="form-control" name='email' type='email' placeholder="Your Email" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label>MESSAGE</label>
+                            <input class="form-control" name='message' placeholder=" write your message here.."
+                                type='text' style="width:auto;height: 200px;">
+                        </div>
+
+
+
+                    </div>
+                    <div class="card-footer">
+                        <div class=" form-group ">
+                            <div class="justify-content-center">
+                                <button class="btn btn-success" type="submit">SUBMIT</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                {{!-- <p class="alert alert-warning">{{message}}</p> --}}
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

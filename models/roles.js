@@ -19,6 +19,11 @@ export default class RoleManager {
         let result = await connection.query(selectQuery);
         return result;
     }
+    async  getUserRoleId(){
+        let selectQuery = `SELECT ID from roles where title = 'user'`;
+        let result = await connection.query(selectQuery);
+        return result[0];
+    }
     async getRoleId(role) {
         let selectQuery = `SELECT ID from roles where title = '${role}' `;
         let result = await connection.query(selectQuery);
@@ -26,9 +31,9 @@ export default class RoleManager {
     }
 
     async update(ID, title) {
-        let updateQuery = `UPDATE roles SET title = '${title}' WHERE ID = ${ID} `;
-        let result = await connection.query(updateQuery);
-        return result;
+        let updateQuery = `UPDATE roles SET title='${title}' WHERE ID=${ID}`;
+        await connection.query(updateQuery);
+
     }
 
     async Remove(ID) {
@@ -43,7 +48,7 @@ export default class RoleManager {
 
 
 
-export  class Role {
+export class Role {
     constructor(ID, title) {
         this.ID = ID;
         this.title = title;

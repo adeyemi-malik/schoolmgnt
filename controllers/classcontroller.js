@@ -15,6 +15,15 @@ function auth(req, res, next) {
         res.redirect('/users/login')
     }
 }
+function isOfficialRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'|| 'Registrar'||'Principal');
+}
+function isAdminorRegistrarRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'||'Registrar');
+}
+function isAdminorProprietorRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'||'Registrar');
+}
 
 function isAdminRequest(req) {
     return req.session.roles.some(r => r.title === 'Admin');
@@ -59,11 +68,11 @@ function requireAll(conditionFunctions) {
     }
 }
 
-router.get('/createclass', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
+router.get('/createclass', auth, requireAny([isAdminorProprietorRequest]), async function (req, res) {
     let result = await classcategoryManager.getcategorynames();
     res.render('createclass', { layout: 'admin', data: result });
 });
-router.post('/createclass', async function (req, res) {
+router.post('/createclass', auth,requireAny([isAdminorProprietorRequest]), async function (req, res) {
     let classname = req.body.class_name;
     let categoryname = req.body.categoryname;
     let result = await classcategoryManager.getCategoryId(categoryname);
@@ -81,24 +90,24 @@ router.get('/classes/:id', async (req, res) => {
     res.set('Content-Type', 'application/json');
     res.status(200).send(data);
 });
-router.get('/classlist', auth, requireAny([isAdminRequest, isRegistrarRequest, isPrincipalRequest, isProprietorRequest]), async function (req, res) {
+router.get('/classlist', auth, requireAny([isOfficialRequest]), async function (req, res) {
     let result = await classmanager.list()
     res.render('classlist', { layout: 'admin', data: result[0] });
 });
-router.get('/class/edit/:ID', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
+router.get('/class/edit/:ID', auth, requireAny([isAdminorProprietorRequest]), async function (req, res) {
     let ID = req.params.ID;
     let result = await classmanager.find(ID);
     console.log(result);
     res.render('editclass', result);
 });
-router.post('/class/edit', async function (req, res) {
+router.post('/class/edit',auth, requireAny([isAdminorProprietorRequest]), async function (req, res) {
     let ID = req.body.ID
     let classname = req.body.class_name;
     let classcategory = req.body.class_category_id;
     await classmanager.update(ID, classname, classcategory);
     res.redirect('/classlist');
 });
-router.get('/class/delete/:ID', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
+router.get('/class/delete/:ID', auth, requireAny([isAdminorProprietorRequest]), async function (req, res) {
     let ID = req.params.ID;
     await classmanager.Remove(ID);
     res.redirect('/classlist');

@@ -46,11 +46,7 @@ function isAuthenticatedRequest(req) {
 }
 function requireAny(conditionFunctions) {
     return function (req, res, next) {
-<<<<<<< HEAD
         for (var i in conditionFunctions) {
-=======
-        for ( var i in conditionFunctions) {
->>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (succeeded) {
@@ -63,11 +59,7 @@ function requireAny(conditionFunctions) {
 }
 function requireAll(conditionFunctions) {
     return function (req, res, next) {
-<<<<<<< HEAD
         for (var i in conditionFunctions) {
-=======
-        for ( var i in conditionFunctions) {
->>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (!succeeded) {
@@ -79,30 +71,8 @@ function requireAll(conditionFunctions) {
     }
 }
 
-/*function RegistrarAuth(req, res, next) {
-    if (req.session.roles.some(r => r.name === 'Registrar')) {
-        next();
-    }
-    else {
-        res.redirect('/forbidden');
-    }
-}
-function ProprietorAuth(req, res, next) {
-    if (req.session.roles.some(r => r.name === 'Proprietor')) {
-        next();
-    }
-    else {
-        res.redirect('/forbidden');
-    }
-}
-function PrincipalAuth(req, res, next) {
-    if (req.session.roles.some(r => r.name === 'Principal')) {
-        next();
-    }
-    else {
-        res.redirect('/forbidden');
-    }
-}*/
+
+
 
 router.get('/apply', async function (req, res) {
     let classes = await classmanager.list();
@@ -122,20 +92,18 @@ router.post('/apply', async function (req, res) {
 
     res.redirect('/');
 })
-router.get('/listapplicants', auth, requireAny([isAdminRequest, isRegistrarRequest,]), async function (req, res) {
+router.get('/listapplicants', auth, requireAny([isAdminRequest, isRegistrarRequest]), async function (req, res) {
     //let ID = req.params.ID;
     // let result1 = await applicantmanager.getClassName(ID);
     let result1 = await applicantmanager.list();
-    console.log(result1);
     let result2 = await applicantmanager.getClassNameList();
-    console.log(result2);
     res.render('applicantslist', {
         layout: 'admin',
         data1: result1,
         data2: result2
     });/*JSON.stringify({ data1: result1[0], data2: result2[0] }));*/
 });
-router.get('/application/admit/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest,]), async function (req, res) {
+router.get('/application/admit/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest]), async function (req, res) {
     let ID = req.params.ID;
     await applicantmanager.admit(ID);
     let result = await applicantmanager.getAdmittedStudent(ID);
