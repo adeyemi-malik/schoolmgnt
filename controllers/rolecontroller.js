@@ -71,7 +71,9 @@ router.get('/roles/edit/:ID', auth, requireAny([isAdminRequest]), async function
 });
 router.post('/roles/edit',auth, requireAny([isAdminRequest]), async function (req, res) {
     let ID = req.body.ID;
+    console.log(ID);
     let title = req.body.title;
+     console.log(title);
     await rolemanager.update(ID, title);
     let email = req.session.email;
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;

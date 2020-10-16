@@ -4,7 +4,6 @@ body {
 #applybutton{
  border-radius:50%;
  background-color: #00B16A;
-
 }
 .aboutinfo{
  border-radius:2px;
@@ -83,4 +82,30 @@ font-size:100px;
 .destination-img img {
   width: 420px;
   height: 263px;
+}
+@media only screen and (max-width: 767px){
+.Admin{
+  background-image: url('../images/books.jpg');
+  background-size:500px;
+  padding-bottom: 400px;
+
+
+}.welcome {
+font-size:50px;
+padding-top:auto;
+padding-bottom: 50px;
+}
+.To{
+font-size:40px;
+   margin-top:10px;
+  margin-bottom: 50px;
+}
+.dash{
+font-size:40px;
+   margin-top:30px;
+  margin-bottom: 80px;
+}
+
+
+
 }

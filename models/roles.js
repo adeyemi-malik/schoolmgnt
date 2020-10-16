@@ -31,7 +31,7 @@ export default class RoleManager {
     }
 
     async update(ID, title) {
-        let updateQuery = `UPDATE roles SET title='${title}' WHERE ID=${ID}`;
+        let updateQuery = `UPDATE roles SET title = '${title}' WHERE ID = ${ID}`;
         await connection.query(updateQuery);
 
     }
