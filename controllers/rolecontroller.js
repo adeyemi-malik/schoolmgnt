@@ -23,11 +23,7 @@ function isAuthenticatedRequest(req) {
 }
 function requireAny(conditionFunctions) {
     return function (req, res, next) {
-<<<<<<< HEAD
         for (var i in conditionFunctions) {
-=======
-        for ( var i in conditionFunctions) {
->>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (succeeded) {
@@ -40,7 +36,7 @@ function requireAny(conditionFunctions) {
 }
 function requireAll(conditionFunctions) {
     return function (req, res, next) {
-        for ( var i in conditionFunctions) {
+        for (var i in conditionFunctions) {
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (!succeeded) {
@@ -55,9 +51,9 @@ function requireAll(conditionFunctions) {
 router.get('/roles/create', auth, requireAny([isAdminRequest]), (req, res) => {
     res.render('Addrole', { layout: 'admin' });
 });
-router.post('/roles/create', auth, requireAny([isAdminRequest]), (req, res) => {
+router.post('/roles/create',auth, requireAny([isAdminRequest]), async (req, res) => {
     let title = req.body.title;
-    rolemanager.create(title);
+     await rolemanager.create(title);
     let email = req.session.email
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     auditLog.insertAuditLog('New Role Added ', `A new role was added to the role list by ${ip} with email ${email}`, email);
@@ -70,10 +66,12 @@ router.get('/roles/list', auth, requireAny([isAdminRequest]), async (req, res) =
 });
 router.get('/roles/edit/:ID', auth, requireAny([isAdminRequest]), async function (req, res) {
     let ID = req.params.ID;
+    console.log(ID);
     let result = await rolemanager.find(ID);
-    res.render('Editrole', { layout: 'admin', result });
+    console.log(result);
+    res.render('Editrole',result);
 });
-router.post('/roles/edit/:ID', auth, requireAny([isAdminRequest]), async function (req, res) {
+router.post('/roles/edit',auth, requireAny([isAdminRequest]), async function (req, res) {
     let ID = req.body.ID;
     let title = req.body.title;
     await rolemanager.update(ID, title);
@@ -82,7 +80,7 @@ router.post('/roles/edit/:ID', auth, requireAny([isAdminRequest]), async functio
     auditLog.insertAuditLog(' Role modified ', `A role was modified in the role list by ${ip} with email ${email}`, email);
     res.redirect('/roles/list');
 });
-router.get('/roles/delete/:ID', auth, requireAny(isAdminRequest), async function (req, res) {
+router.get('/roles/delete/:ID',auth, requireAny([isAdminRequest]), async function (req, res) {
     let ID = req.params.ID;
     let result = await rolemanager.Remove(ID);
     let email = req.session.email

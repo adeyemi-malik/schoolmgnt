@@ -32,9 +32,9 @@ export default class UsersManager {
         let result = await connection.query(emailquery);
         return result[0][0];
     }
-    create(firstname, lastname, email, phone_no, password) {
+    async create(firstname, lastname, email, phone_no, password) {
         let insertQuery = `INSERT INTO users (firstname,lastname,email,phoneno,password) VALUES( '${firstname}', '${lastname}', '${email}', '${phone_no}','${password}')`;
-        connection.query(insertQuery);
+        await connection.query(insertQuery);
     }
 
 
@@ -42,6 +42,11 @@ export default class UsersManager {
         let selectQuery = `SELECT * FROM users WHERE is_deleted = ${0}`;
         let result = await connection.query(selectQuery);
         return result;
+    }
+    async getUserId(email) {
+        let userQuery = `select ID from users WHERE email='${email}'`;
+        let result = await connection.query(userQuery);
+        return result[0];
     }
     async getRoles(userId) {
         let rolesQuery = `select title from roles r inner join user_role ur on r.id = ur.role_id and ur.user_id = ${userId}`;

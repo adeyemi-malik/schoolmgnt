@@ -2,6 +2,7 @@
 
 import express from 'express';
 import bycryt from 'bcrypt';
+import session from 'express-session';
 import UsersManager from '../models/users.js';
 const router = express.Router();
 const usersmanager = new UsersManager();
@@ -11,7 +12,6 @@ import RoleManager from '../models/roles.js';
 const rolemanager = new RoleManager();
 import User_roleManager from '../models/user_role.js';
 const user_rolemanager = new User_roleManager();
-
 
 function auth(req, res, next) {
     if (isAuthenticatedRequest(req)) {
@@ -31,11 +31,7 @@ function isAuthenticatedRequest(req) {
 }
 function requireAny(conditionFunctions) {
     return function (req, res, next) {
-<<<<<<< HEAD
         for (var i in conditionFunctions) {
-=======
-        for ( var i in conditionFunctions) {
->>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (succeeded) {
@@ -59,6 +55,7 @@ router.post('/users/signup', async function (req, res) {
     let phone_no = req.body.phone_no;
     let password = req.body.password1;
     let password2 = req.body.password2;
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     if (email.indexOf('@') < 0) {
         let message = "Email is invalid";
         res.render("usersignup", { 'message': message });
@@ -77,11 +74,15 @@ router.post('/users/signup', async function (req, res) {
         return;
     }
     let hashedpassword = await bycryt.hash(password, 10);
-    usersmanager.create(firstname, lastname, email, phone_no, hashedpassword);
+    await usersmanager.create(firstname, lastname, email, phone_no, hashedpassword);
+    // let result1 = await usersmanager.getUserId(email);
+    // let user_id = result1[0].ID;
+    // let result2 = await rolemanager.getUserRoleId();
+    // let userrole_id = result2[0].ID;
+    // await user_rolemanager.create(user_id, userrole_id);
     let message = "Your account has been created";
     res.render("signup", { 'message': message });
     res.redirect('/users/login');
-    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     auditLog.insertAuditLog('User account created', `successful creation of account by ${ip} with email ${email}`, email);
 
 });
@@ -155,8 +156,7 @@ router.post('/users/login', async function (req, res) {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     let user = await usersmanager.findByEmail(email);
     if (user == null || user == undefined) {
-        let message = "<div class='alert alert-danger'>Incorrect email or password</div>";
-        res.writeHead(200, { 'Content-Type': 'text/html' });
+        let message = "Incorrect email or password";
         res.render("login", { 'message': message });
         return;
     }
@@ -170,8 +170,7 @@ router.post('/users/login', async function (req, res) {
             let roles = await usersmanager.getRoles(user.ID);
             req.session.roles = roles || [];
             res.redirect('/');
-            const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-            auditLog.insertAuditLog(' succesful Login', `successful login from ${ip} with email ${email}`, email);
+            auditLog.insertAuditLog('succesful Login', `successful login from ${ip} with email ${email}`, email);
             res.redirect('/');
         }
         else {
@@ -184,13 +183,13 @@ router.post('/users/login', async function (req, res) {
 });
 router.get('/users/list', auth, requireAny([isAdminRequest]), async function (req, res) {
     let result = await usersmanager.list();
-    console.log(result);
     res.render('userslist', { layout: 'admin', data: result[0] });
 });
 
-router.get('/users/logout', (req, res) => {
+router.get('/users/logout', async (req, res) => {
     if (req.session.userid) {
         delete req.session.userid;
+          req.session.isLoggedIn = false;
         res.redirect('/users/login');
     } else {
         let email = req.session.email;

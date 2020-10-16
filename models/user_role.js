@@ -7,10 +7,10 @@ export default class User_roleManager {
         return result[0][0];
     }
 
-    create(user_id, role_id) {
+    async create(user_id, role_id) {
 
-        let insertQuery = `INSERT INTO user_role (user_id,role_id) VALUES( ${user_id}, '${role_id}')`;
-        connection.query(insertQuery);
+        let insertQuery = `INSERT INTO user_role (user_id,role_id) VALUES( ${user_id}, ${role_id})`;
+        await connection.query(insertQuery);
     }
     async list() {
         let selectQuery = `SELECT * FROM user_role WHERE is_deleted = ${0}`;

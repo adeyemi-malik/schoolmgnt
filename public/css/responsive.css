@@ -11,14 +11,14 @@
 .blog .owl-carousel .owl-nav .owl-next {
 	right: -55px;
 }
-}
-@media only screen and (min-width: 768px) and (max-width: 991px) {
+ }
+ @media only screen and (min-width: 300px) and (max-width:767PX) {
 .section-title h2 {
 	font-size: 30px;
-}
-.container{
+} 
+ .containerr{
 	width:auto;
-}
+} 
 .header .content,.header .social {
 	float: none;
 	text-align: center;
@@ -44,6 +44,7 @@
 .home-slider, 
 .home-slider .single-slider {
 	height: 500px;
+	
 }
 .home-slider .single-slider .slider-text {
 	margin: 99px 0 0;
@@ -365,7 +366,7 @@
 }
 .mail-success {
 	background: #f6f6f6;
-	background: ;
+
 }
 .footer .copyright,.footer .footer-menu  {
 	float: none;

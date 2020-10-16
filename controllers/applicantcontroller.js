@@ -15,18 +15,15 @@ function auth(req, res, next) {
         next();
     }
     else {
-        res.redirect('/users/login')
+        res.redirect('/users/login');
     }
 }
-
-/*function adminAuth(req, res, next) {
-    if (isAdminRequest(req)) {
-        next();
-    }
-    else {
-        res.redirect('/forbidden')
-    }
-}*/
+function isOfficialRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'||  r.title ==='Registrar'|| r.title ==='Principal');
+}
+function isAdminorRegistrarRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'||r.title ==='Registrar');
+}
 
 function isAdminRequest(req) {
     return req.session.roles.some(r => r.title === 'Admin');
@@ -46,11 +43,7 @@ function isAuthenticatedRequest(req) {
 }
 function requireAny(conditionFunctions) {
     return function (req, res, next) {
-<<<<<<< HEAD
         for (var i in conditionFunctions) {
-=======
-        for ( var i in conditionFunctions) {
->>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (succeeded) {
@@ -61,48 +54,9 @@ function requireAny(conditionFunctions) {
         res.redirect('/forbidden');
     }
 }
-function requireAll(conditionFunctions) {
-    return function (req, res, next) {
-<<<<<<< HEAD
-        for (var i in conditionFunctions) {
-=======
-        for ( var i in conditionFunctions) {
->>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
-            const f = conditionFunctions[i];
-            const succeeded = f(req);
-            if (!succeeded) {
-                res.redirect('/forbidden');
-                return;
-            }
-        }
-        next();
-    }
-}
 
-/*function RegistrarAuth(req, res, next) {
-    if (req.session.roles.some(r => r.name === 'Registrar')) {
-        next();
-    }
-    else {
-        res.redirect('/forbidden');
-    }
-}
-function ProprietorAuth(req, res, next) {
-    if (req.session.roles.some(r => r.name === 'Proprietor')) {
-        next();
-    }
-    else {
-        res.redirect('/forbidden');
-    }
-}
-function PrincipalAuth(req, res, next) {
-    if (req.session.roles.some(r => r.name === 'Principal')) {
-        next();
-    }
-    else {
-        res.redirect('/forbidden');
-    }
-}*/
+
+
 
 router.get('/apply', async function (req, res) {
     let classes = await classmanager.list();
@@ -122,20 +76,18 @@ router.post('/apply', async function (req, res) {
 
     res.redirect('/');
 })
-router.get('/listapplicants', auth, requireAny([isAdminRequest, isRegistrarRequest,]), async function (req, res) {
+router.get('/listapplicants', auth, requireAny([isOfficialRequest]), async function (req, res) {
     //let ID = req.params.ID;
     // let result1 = await applicantmanager.getClassName(ID);
     let result1 = await applicantmanager.list();
-    console.log(result1);
     let result2 = await applicantmanager.getClassNameList();
-    console.log(result2);
     res.render('applicantslist', {
         layout: 'admin',
         data1: result1,
         data2: result2
     });/*JSON.stringify({ data1: result1[0], data2: result2[0] }));*/
 });
-router.get('/application/admit/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest,]), async function (req, res) {
+router.get('/application/admit/:ID', auth, requireAny([isAdminorRegistrarRequest]), async function (req, res) {
     let ID = req.params.ID;
     await applicantmanager.admit(ID);
     let result = await applicantmanager.getAdmittedStudent(ID);
@@ -154,7 +106,7 @@ router.get('/application/admit/:ID', auth, requireAny([isAdminRequest, isRegistr
     res.redirect('/admissionlist');
 });
 
-router.get('/application/delete/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest, isPrincipalRequest]), async function (req, res) {
+router.get('/application/delete/:ID', auth, requireAny([isAdminRequest]), async function (req, res) {
     let ID = req.params.ID;
     let applicant = await applicantmanager.find(ID);
     let ApplicantEmail = applicant.email

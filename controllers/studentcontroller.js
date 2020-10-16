@@ -18,7 +18,15 @@ function auth(req, res, next) {
 function isAdminRequest(req) {
     return req.session.roles.some(r => r.title === 'Admin');
 }
-
+function isOfficialRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'||r.title === 'Registrar'||r.title ==='Principal');
+}
+function isAdminorRegistrarRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'||r.title ==='Registrar');
+}
+function isAdminorProprietorRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'||r.title ==='Proprietor');
+}
 function isRegistrarRequest(req) {
     return req.session.roles.some(r => r.title === 'Admin');
 }
@@ -33,11 +41,7 @@ function isAuthenticatedRequest(req) {
 }
 function requireAny(conditionFunctions) {
     return function (req, res, next) {
-<<<<<<< HEAD
         for (var i in conditionFunctions) {
-=======
-        for ( var i in conditionFunctions) {
->>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
             const f = conditionFunctions[i];
             const succeeded = f(req);
             if (succeeded) {
@@ -48,32 +52,16 @@ function requireAny(conditionFunctions) {
         res.redirect('/forbidden');
     }
 }
-function requireAll(conditionFunctions) {
-    return function (req, res, next) {
-<<<<<<< HEAD
-        for (var i in conditionFunctions) {
-=======
-        for ( var i in conditionFunctions) {
->>>>>>> 478bd6fefad5e1766c9db440d999aed179233b60
-            const f = conditionFunctions[i];
-            const succeeded = f(req);
-            if (!succeeded) {
-                res.redirect('/forbidden');
-                return;
-            }
-        }
-        next();
-    }
-}
 
 
 
-router.get('/registerstudent', auth, requireAny([isAdminRequest, isRegistrarRequest]), async function (req, res) {
+
+router.get('/registerstudent', auth, requireAny([isAdminorRegistrarRequest]), async function (req, res) {
     let classes = await classmanager.list();
     res.render('studentreg', { layout: 'admin', data: classes[0] });
 })
 
-router.post('/registerstudent', auth, requireAny([isAdminRequest, isRegistrarRequest]), async function (req, res) {
+router.post('/registerstudent', auth, requireAny([isAdminorRegistrarRequest]), async function (req, res) {
     let firstname = req.body.firstname;
     let middlename = req.body.middlename;
     let lastname = req.body.lastname;
@@ -88,15 +76,13 @@ router.post('/registerstudent', auth, requireAny([isAdminRequest, isRegistrarReq
     res.redirect('/studentslist');
 
 })
-router.get('/studentslist', auth, requireAny([isAdminRequest, isRegistrarRequest, isProprietorRequest, isPrincipalRequest]), async function (req, res) {
+router.get('/studentslist', auth, requireAny([isOfficialRequest]), async function (req, res) {
     let result = await studentmanager.list();
     res.render('studentslist', { layout: 'admin', data: result[0] });
 });
-router.get('/students/edit/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest]), async function (req, res) {
+router.get('/students/edit/:ID', auth, requireAny([isAdminorRegistrarRequest]), async function (req, res) {
     let ID = req.params.ID;
-    console.log(ID);
     let student = await studentmanager.find(ID);
-    console.log(student);
     if (student == null || student == undefined) {
         res.status(404).send("Student detail is not found");
     }
@@ -106,7 +92,7 @@ router.get('/students/edit/:ID', auth, requireAny([isAdminRequest, isRegistrarRe
     }
 
 });
-router.post('/students/edit/:ID', async function (req, res) {
+router.post('/students/edit/:ID',auth, requireAny([isAdminorRegistrarRequest]), async function (req, res) {
     let ID = req.body.ID;
     let firstname = req.body.firstname;
     let middlename = req.body.middlename;
@@ -123,7 +109,7 @@ router.post('/students/edit/:ID', async function (req, res) {
     res.redirect('/studentslist');
 });
 
-router.get('/students/delete/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest, isProprietorRequest, isPrincipalRequest]), async function (req, res, next) {
+router.get('/students/delete/:ID', auth, requireAny([isAdminRequest]), async function (req, res, next) {
     let ID = req.params.ID;
     let student = await studentmanager.find(ID);
     if (student == null || student == undefined) {
