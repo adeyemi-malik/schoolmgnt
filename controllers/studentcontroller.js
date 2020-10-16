@@ -82,9 +82,7 @@ router.get('/studentslist', auth, requireAny([isOfficialRequest]), async functio
 });
 router.get('/students/edit/:ID', auth, requireAny([isAdminorRegistrarRequest]), async function (req, res) {
     let ID = req.params.ID;
-    console.log(ID);
     let student = await studentmanager.find(ID);
-    console.log(student);
     if (student == null || student == undefined) {
         res.status(404).send("Student detail is not found");
     }

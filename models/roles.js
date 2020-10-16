@@ -6,7 +6,7 @@ export default class RoleManager {
     async find(ID) {
         let findquery = `SELECT * FROM roles WHERE ID = ${ID}`;
         let result = await connection.query(findquery);
-        return result[0];
+        return result[0][0];
     }
 
     create(title) {
