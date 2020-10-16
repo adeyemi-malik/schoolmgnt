@@ -44,6 +44,7 @@ function requireAny(conditionFunctions) {
 router.get('/contact/create', (req, res) => {
     res.render('contactform');
 });
+
 router.post('/contact/create', async (req, res) => {
     let name = req.body.name;
     let email = req.body.email;
