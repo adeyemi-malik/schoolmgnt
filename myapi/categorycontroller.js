@@ -18,13 +18,13 @@ function auth(req, res, next) {
 }
 
 function isOfficialRequest(req) {
-    return req.session.roles.some(r => r.title === 'Admin'|| 'Registrar'||'Principal');
+    return req.session.roles.some(r => r.title === 'Admin'|| r.title ==='Registrar'||r.title ==='Principal');
 }
 function isAdminorRegistrarRequest(req) {
-    return req.session.roles.some(r => r.title === 'Admin'||'Registrar');
+    return req.session.roles.some(r => r.title === 'Admin'||r.title ==='Registrar');
 }
 function isAdminorProprietorRequest(req) {
-    return req.session.roles.some(r => r.title === 'Admin'||'Registrar');
+    return req.session.roles.some(r => r.title === 'Admin'||r.title ==='Registrar');
 }
 function isAdminRequest(req) {
     return req.session.roles.some(r => r.title === 'Admin');
@@ -86,7 +86,7 @@ router.post('/edit', auth, requireAny([isAdminorProprietorRequest]), async funct
     await classcategoryManager.update(ID, name);
     res.redirect('/categories/list');
 });
-router.get('/delete/:ID', auth, requireAny([isAdminRequest, isProprietorRequest]), async function (req, res) {
+router.get('/delete/:ID', auth, requireAny([isAdminorProprietorRequest]), async function (req, res) {
     let ID = req.params.ID;
     await classcategoryManager.Remove(ID);
     res.redirect('/categories/list');

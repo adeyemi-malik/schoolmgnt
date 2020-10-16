@@ -75,11 +75,11 @@ router.post('/users/signup', async function (req, res) {
     }
     let hashedpassword = await bycryt.hash(password, 10);
     await usersmanager.create(firstname, lastname, email, phone_no, hashedpassword);
-    let result1 = await usersmanager.getUserId(email);
-    let user_id = result1[0].ID;
-    let result2 = await rolemanager.getUserRoleId();
-    let userrole_id = result2[0].ID;
-    await user_rolemanager.create(user_id, userrole_id);
+    // let result1 = await usersmanager.getUserId(email);
+    // let user_id = result1[0].ID;
+    // let result2 = await rolemanager.getUserRoleId();
+    // let userrole_id = result2[0].ID;
+    // await user_rolemanager.create(user_id, userrole_id);
     let message = "Your account has been created";
     res.render("signup", { 'message': message });
     res.redirect('/users/login');
@@ -189,7 +189,7 @@ router.get('/users/list', auth, requireAny([isAdminRequest]), async function (re
 router.get('/users/logout', async (req, res) => {
     if (req.session.userid) {
         delete req.session.userid;
-
+          req.session.isLoggedIn = false;
         res.redirect('/users/login');
     } else {
         let email = req.session.email;

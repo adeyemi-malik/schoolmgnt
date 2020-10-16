@@ -38,13 +38,16 @@ function auth(req, res, next) {
     }
 }
 function isOfficialRequest(req) {
-    return req.session.roles.some(r => r.title === 'Admin'|| 'Registrar'||'Principal');
+    return req.session.roles.some(r => r.title === 'Admin'||  r.title ==='Registrar'|| r.title ==='Principal');
 }
 function isAdminorRegistrarRequest(req) {
-    return req.session.roles.some(r => r.title === 'Admin'||'Registrar');
+    return req.session.roles.some(r => r.title === 'Admin'||r.title ==='Registrar');
 }
 function isAdminRequest(req) {
     return req.session.roles.some(r => r.title === 'Admin');
+}
+function isuserRequest(req) {
+    return req.session.roles.some(r => r.title === 'user');
 }
 
 function isRegistrarRequest(req) {
@@ -71,9 +74,9 @@ function requireAny(conditionFunctions) {
                 next();
                 return;
             }
-            else {
-                res.redirect('/forbidden');
-            }
+           else {
+               res.redirect('/forbidden');
+           }
         }
 
     }

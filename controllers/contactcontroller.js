@@ -17,7 +17,7 @@ function auth(req, res, next) {
     }
 }
 function isOfficialRequest(req) {
-    return req.session.roles.some(r => r.title === 'Admin'|| 'Registrar'||'Principal');
+    return req.session.roles.some(r => r.title === 'Admin'|| r.title ==='Registrar'||r.title ==='Principal');
 }
 function isAdminRequest(req) {
     return req.session.roles.some(r => r.title === 'Admin');
@@ -39,19 +39,7 @@ function requireAny(conditionFunctions) {
         res.redirect('/forbidden');
     }
 }
-function requireAll(conditionFunctions) {
-    return function (req, res, next) {
-        for (var i in conditionFunctions) {
-            const f = conditionFunctions[i];
-            const succeeded = f(req);
-            if (!succeeded) {
-                res.redirect('/forbidden');
-                return;
-            }
-        }
-        next();
-    }
-}
+
 
 router.get('/contact/create', (req, res) => {
     res.render('contactform');

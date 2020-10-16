@@ -15,18 +15,15 @@ function auth(req, res, next) {
         next();
     }
     else {
-        res.redirect('/users/login')
+        res.redirect('/users/login');
     }
 }
-
-/*function adminAuth(req, res, next) {
-    if (isAdminRequest(req)) {
-        next();
-    }
-    else {
-        res.redirect('/forbidden')
-    }
-}*/
+function isOfficialRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'||  r.title ==='Registrar'|| r.title ==='Principal');
+}
+function isAdminorRegistrarRequest(req) {
+    return req.session.roles.some(r => r.title === 'Admin'||r.title ==='Registrar');
+}
 
 function isAdminRequest(req) {
     return req.session.roles.some(r => r.title === 'Admin');
@@ -57,19 +54,6 @@ function requireAny(conditionFunctions) {
         res.redirect('/forbidden');
     }
 }
-function requireAll(conditionFunctions) {
-    return function (req, res, next) {
-        for (var i in conditionFunctions) {
-            const f = conditionFunctions[i];
-            const succeeded = f(req);
-            if (!succeeded) {
-                res.redirect('/forbidden');
-                return;
-            }
-        }
-        next();
-    }
-}
 
 
 
@@ -92,7 +76,7 @@ router.post('/apply', async function (req, res) {
 
     res.redirect('/');
 })
-router.get('/listapplicants', auth, requireAny([isAdminRequest, isRegistrarRequest]), async function (req, res) {
+router.get('/listapplicants', auth, requireAny([isOfficialRequest]), async function (req, res) {
     //let ID = req.params.ID;
     // let result1 = await applicantmanager.getClassName(ID);
     let result1 = await applicantmanager.list();
@@ -103,7 +87,7 @@ router.get('/listapplicants', auth, requireAny([isAdminRequest, isRegistrarReque
         data2: result2
     });/*JSON.stringify({ data1: result1[0], data2: result2[0] }));*/
 });
-router.get('/application/admit/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest]), async function (req, res) {
+router.get('/application/admit/:ID', auth, requireAny([isAdminorRegistrarRequest]), async function (req, res) {
     let ID = req.params.ID;
     await applicantmanager.admit(ID);
     let result = await applicantmanager.getAdmittedStudent(ID);
@@ -122,7 +106,7 @@ router.get('/application/admit/:ID', auth, requireAny([isAdminRequest, isRegistr
     res.redirect('/admissionlist');
 });
 
-router.get('/application/delete/:ID', auth, requireAny([isAdminRequest, isRegistrarRequest, isPrincipalRequest]), async function (req, res) {
+router.get('/application/delete/:ID', auth, requireAny([isAdminRequest]), async function (req, res) {
     let ID = req.params.ID;
     let applicant = await applicantmanager.find(ID);
     let ApplicantEmail = applicant.email
